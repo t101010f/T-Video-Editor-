@@ -50,6 +50,11 @@ h1,h2,h3{margin:0;text-wrap:balance}
 .brand h1{font-size:18px;font-weight:700;letter-spacing:-.01em;line-height:1.1}
 .brand small{display:block;color:var(--muted);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .spacer{flex:1}
+.save-st{display:flex;align-items:center;gap:5px;font-size:12px;color:var(--muted);padding-inline:4px;white-space:nowrap}
+.save-st[data-st=ok] svg{color:#34C759}
+.save-st[data-st=saving] svg{color:var(--accent)}
+.save-st[data-st=err]{color:var(--danger)}
+.btn.armed{background:var(--danger);color:#fff}
 .icon-btn{width:38px;height:38px;border-radius:50%;background:var(--fill);display:grid;place-items:center;transition:transform .15s,background .2s;flex:none}
 .icon-btn:hover{background:var(--fill-2)}
 .icon-btn:active{transform:scale(.92)}
@@ -285,7 +290,7 @@ footer b{color:var(--fg);font-weight:600}
 #mediaBox{position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
 
 @media (max-width:899px){
-  .brand small,.hide-sm{display:none}
+  .brand small,.hide-sm,.save-st span{display:none}
   .ws{grid-template-columns:minmax(0,1fr);grid-template-areas:"stage" "tl" "panel";gap:12px;margin-top:12px}
   .stage{height:min(46vh,520px)}
   .panel{max-height:none;padding:16px}
@@ -323,6 +328,7 @@ footer b{color:var(--fg);font-weight:600}
       <div><h1 data-i18n="appName">لقطة</h1><small data-i18n="tagline">محرر فيديو يعمل في متصفحك</small></div>
     </div>
     <div class="spacer"></div>
+    <div class="save-st" id="saveSt" aria-live="polite"></div>
     <button class="pill-btn" id="langBtn" aria-label="Language"></button>
     <button class="icon-btn" id="themeBtn" aria-label="Theme"></button>
     <button class="grad-btn" id="hdrExport"><span id="hdrExportIc"></span><span class="hide-sm" data-i18n="export">تصدير</span></button>
@@ -443,7 +449,7 @@ const I18N = {
   saveUnavailable:'الحفظ غير متاح في هذا العرض',declined:'لم يتم الحفظ',tlEmpty:'الخط الزمني فارغ — أضف فيديو أو صوراً',sec:'ث',
   deleted:'تم الحذف',applied:'تم التطبيق على كل المقاطع',recording:'جارٍ التسجيل…',
   lpHint:'المس أي عنصر لأدواته، واضغط مطولاً واسحب لتحريكه',editText:'تعديل النص',editAudio:'تعديل الصوت',
-  transitionShort:'انتقال',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
+  transitionShort:'انتقال',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
  en:{appName:'Laqta',tagline:'A video editor that runs in your browser',export:'Export',exporting:'Exporting…',timeline:'Timeline',
   footPrivacy:'Everything is processed in your browser. Your files are never uploaded.',footVersion:'Version 0.1',
   media:'Media',edit:'Edit',text:'Text',audio:'Audio',filters:'Filters',canvas:'Canvas',
@@ -480,7 +486,7 @@ const I18N = {
   saveUnavailable:'Saving is not available in this view',declined:'Not saved',tlEmpty:'The timeline is empty. Add videos or photos.',sec:'s',
   deleted:'Deleted',applied:'Applied to all clips',recording:'Recording…',
   lpHint:'Tap an item for its tools. Long-press and drag to move it.',editText:'Edit text',editAudio:'Edit audio',
-  transitionShort:'Transition',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
+  transitionShort:'Transition',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
 };
 let lang = store.get('laqta.lang') === 'en' ? 'en' : 'ar';
 const t = k => (I18N[lang][k] ?? I18N.ar[k] ?? k);
@@ -581,8 +587,8 @@ function ratioWH(r, short){ const [a,b]=r.split(':').map(Number); const even=v=>
 let hist=[], fut=[];
 const snap = () => JSON.stringify({S, sel});
 let lastSnap = snap();
-function commit(){ const s=snap(); if(s===lastSnap) return; hist.push(lastSnap); if(hist.length>80) hist.shift(); fut=[]; lastSnap=s; updUndo(); }
-function restore(s){ const o=JSON.parse(s); Object.keys(S).forEach(k=>delete S[k]); Object.assign(S,o.S); sel=o.sel; T=clamp(T,0,total()); applyRatio(false); renderAll(); }
+function commit(){ const s=snap(); if(s===lastSnap) return; hist.push(lastSnap); if(hist.length>80) hist.shift(); fut=[]; lastSnap=s; updUndo(); scheduleSave(); }
+function restore(s){ const o=JSON.parse(s); Object.keys(S).forEach(k=>delete S[k]); Object.assign(S,o.S); sel=o.sel; T=clamp(T,0,total()); applyRatio(false); renderAll(); scheduleSave(); }
 function undo(){ if(!hist.length||exp) return; fut.push(lastSnap); lastSnap=hist.pop(); restore(lastSnap); updUndo(); }
 function redo(){ if(!fut.length||exp) return; hist.push(lastSnap); lastSnap=fut.pop(); restore(lastSnap); updUndo(); }
 function updUndo(){ $('#undoBtn').disabled=!hist.length; $('#redoBtn').disabled=!fut.length; }
@@ -1082,7 +1088,7 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeTools(); });
 function dupAudio(){
   const a=selAudio(); if(!a) return; const s=SRC[a.srcId]; if(!s) return;
   const el=document.createElement('audio'); el.preload='auto'; el.src=s.url; mediaBox.appendChild(el);
-  const ns=Object.assign({},s,{id:uid(),el,gain:null,chain:null,fxKey:null}); SRC[ns.id]=ns; routeSrc(ns);
+  const ns=Object.assign({},s,{id:uid(),el,gain:null,chain:null,fxKey:null}); SRC[ns.id]=ns; routeSrc(ns); if(s.blob) saveFileBlob(ns,s.blob);
   const b=JSON.parse(JSON.stringify(a)); b.id=uid(); b.srcId=ns.id; b.start=a.start+aLen(a);
   S.audios.push(b); sel={type:'audio',id:b.id}; commit(); renderAll();
 }
@@ -1125,9 +1131,9 @@ async function decodeAudio(file){
 function kindOf(f){ const ty=f.type||''; if(ty.startsWith('video')) return 'video'; if(ty.startsWith('image')) return 'image'; if(ty.startsWith('audio')) return 'audio';
   const ext=(f.name.split('.').pop()||'').toLowerCase(); if(['mp4','mov','webm','m4v','mkv'].includes(ext)) return 'video'; if(['jpg','jpeg','png','gif','webp','heic'].includes(ext)) return 'image'; if(['mp3','m4a','wav','aac','ogg','opus','flac'].includes(ext)) return 'audio'; return null; }
 
-function loadSource(file,type){
+function loadSource(file,type,forcedId,forcedName){
   return new Promise(async (res,rej)=>{
-    const url=URL.createObjectURL(file), id=uid(), s={id,type,url,name:file.name.replace(/\.[^.]+$/,''),duration:0,thumb:'',el:null};
+    const url=URL.createObjectURL(file), id=forcedId||uid(), s={id,type,url,blob:file,name:forcedName||(file.name||'').replace(/\.[^.]+$/,''),duration:0,thumb:'',el:null};
     if(type==='image'){ const img=new Image(); img.onload=()=>{ s.el=img; s.thumb=makeThumb(img,img.naturalWidth,img.naturalHeight); SRC[id]=s; res(s); }; img.onerror=rej; img.src=url; return; }
     let buf=null; if(type==='audio') buf=await decodeAudio(file);
     const el=document.createElement(type); el.preload='auto'; el.playsInline=true; el.setAttribute('playsinline',''); el.src=url; mediaBox.appendChild(el);
@@ -1152,7 +1158,7 @@ async function importFiles(list, forceAudio=false){
   let added=0;
   for(const f of files){
     let k=kindOf(f); if(forceAudio) k='audio';
-    try{ const s=await loadSource(f,k); if(k==='audio') addAudioFromSrc(s); else addClipFromSrc(s); added++; }
+    try{ const s=await loadSource(f,k); saveFileBlob(s,f); if(k==='audio') addAudioFromSrc(s); else addClipFromSrc(s); added++; }
     catch(e){ toast(t('loadFail')+' '+f.name); }
   }
   if(added){ if(forceAudio||files.every(f=>kindOf(f)==='audio')) tab='audio'; else if(tab==='media'||tab==='export') tab='media'; commit(); renderAll(); toast(t('added')+' ('+added+')'); }
@@ -1187,6 +1193,7 @@ function pMedia(){
    `<label class="drop" for="inMedia" tabindex="0"><span class="di">${icon('upload',26)}</span><b>${t('dropTitle')}</b><span>${t('dropSub')}</span></label>
     <div class="grid2"><button class="btn" data-act="addColor">${icon('swatch',18)} ${t('addColor')}</button><button class="btn" data-act="pickAudio">${icon('music',18)} ${t('addMusic')}</button></div>`+
    (S.sample?`<div class="note">${icon('info',20)}<div><b>${t('sampleTitle')}</b><span>${t('sampleSub')}</span></div><button class="btn sm" data-act="clearSample">${t('clearSample')}</button></div>`:'')+
+   grp(t('project'), `<p class="hint" style="margin:0">${t('autosaveNote')}</p><button class="btn danger block" data-act="newProject">${icon('plus',18)} ${t('newProject')}</button>`)+
    grp(t('library'), srcs.length?`<div class="lib">${srcs.map(s=>`<button class="lib-item" data-act="addFromLib" data-v="${s.id}" style="background-image:url(${s.thumb||''})" aria-label="${esc(s.name)}">${s.type==='video'?`<span>${fmt(s.duration)}</span>`:''}</button>`).join('')}</div>`:`<p class="hint" style="margin:0">${t('libEmpty')}</p>`);
 }
 function pEdit(){
@@ -1345,6 +1352,8 @@ const ACTIONS={
   fxAll(){ const c=filterTarget(); if(!c) return; S.clips.forEach(o=>{ if(o!==c) o.fx=JSON.parse(JSON.stringify(c.fx)); }); commit(); toast(t('applied')); dirty=true; },
   fxReset(){ const c=filterTarget(); if(!c) return; c.fx={p:'none',bri:0,con:0,sat:0,warm:0,vig:0}; commit(); renderPanel(); dirty=true; },
   ratio(b){ S.ratio=b.dataset.v; result=null; applyRatio(); commit(); renderPanel(); },
+  newProject(b){ if(b.dataset.armed){ newProject(); return; } b.dataset.armed='1'; b.classList.add('armed'); b.innerHTML=icon('trash',18)+' '+t('confirmNew');
+    setTimeout(()=>{ if(b.isConnected){ delete b.dataset.armed; b.classList.remove('armed'); b.innerHTML=icon('plus',18)+' '+t('newProject'); } },3500); },
   export(){ startExport(); }, cancelExport(){ endExport(true); },
   saveFile(){ saveResult(); }, newExport(){ result=null; renderPanel(); }
 };
@@ -1425,6 +1434,7 @@ function applyLang(){
   const tips={undoBtn:'undo',redoBtn:'redo',startBtn:'toStart',playBtn:'play',splitBtn:'splitAt',addBtn:'addMedia',zoomIn:'zoomIn',zoomOut:'zoomOut',hdrExport:'export'};
   for(const [id,k] of Object.entries(tips)){ const el=document.getElementById(id); el.title=t(k); el.setAttribute('aria-label',t(k)); }
   applyTheme(); renderTabs(); renderPanel(); renderTimeline(); dirty=true;
+  const ss=$('#saveSt'); if(ss&&ss.dataset.st) setSaveState(ss.dataset.st);
 }
 $('#langBtn').addEventListener('click',()=>{ lang=lang==='ar'?'en':'ar'; store.set('laqta.lang',lang);
   if(S.sample && S.texts.length===2){ S.texts[0].text=t('sampleTitleText'); S.texts[1].text=t('sampleSubText'); lastSnap=snap(); }
@@ -1458,6 +1468,53 @@ function toast(m){ const el=$('#toast'); el.textContent=m; el.classList.add('sho
 
 function renderAll(){ renderTabs(); renderTimeline(); renderPanel(); updTime(); updUndo(); if(qt) renderQT(); dirty=true; }
 
+/* ---------- autosave: project JSON + media blobs in IndexedDB ---------- */
+const DB={db:null,ok:!!window.indexedDB};
+function idb(){ if(DB.db) return Promise.resolve(DB.db); return new Promise((res,rej)=>{ try{ const r=indexedDB.open('laqta',1);
+  r.onupgradeneeded=()=>{ const d=r.result; if(!d.objectStoreNames.contains('files')) d.createObjectStore('files'); if(!d.objectStoreNames.contains('meta')) d.createObjectStore('meta'); };
+  r.onsuccess=()=>{ DB.db=r.result; res(DB.db); }; r.onerror=()=>rej(r.error); r.onblocked=()=>rej(new Error('blocked')); }catch(e){ rej(e); } }); }
+function idbDo(store,mode,fn){ return idb().then(d=>new Promise((res,rej)=>{ const tx=d.transaction(store,mode), r=fn(tx.objectStore(store)); let out;
+  if(r) r.onsuccess=()=>{ out=r.result; }; tx.oncomplete=()=>res(out); tx.onerror=()=>rej(tx.error); tx.onabort=()=>rej(tx.error); })); }
+const dbPut=(st,k,v)=>idbDo(st,'readwrite',o=>o.put(v,k)), dbGet=(st,k)=>idbDo(st,'readonly',o=>o.get(k)), dbClear=st=>idbDo(st,'readwrite',o=>o.clear());
+let saveTimer=0, restoring=false, persistAsked=false;
+function setSaveState(st){ const el=$('#saveSt'); if(!el) return; el.dataset.st=st;
+  el.innerHTML=icon(st==='err'?'x':st==='saving'?'clock':'check',14)+`<span>${t(st==='err'?'saveErr':st==='saving'?'saving':'savedAuto')}</span>`; el.title=t(st==='err'?'saveErr':'autosaveNote'); }
+function scheduleSave(){ if(restoring||!DB.ok) return; clearTimeout(saveTimer); setSaveState('saving'); saveTimer=setTimeout(saveProject,600); }
+async function saveProject(){
+  if(restoring||!DB.ok) return; clearTimeout(saveTimer);
+  try{ await dbPut('meta','project',{v:1,S:JSON.parse(JSON.stringify(S)),sel,T,pps,srcs:Object.values(SRC).map(x=>({id:x.id,type:x.type,name:x.name})),at:Date.now()}); setSaveState('ok'); }
+  catch(e){ setSaveState('err'); }
+}
+function saveFileBlob(src,blob){
+  if(!DB.ok||!blob) return;
+  if(!persistAsked){ persistAsked=true; try{ navigator.storage&&navigator.storage.persist&&navigator.storage.persist().catch(()=>{}); }catch(e){} }
+  dbPut('files',src.id,{type:src.type,name:src.name,blob}).then(scheduleSave).catch(e=>{ setSaveState('err'); if(e&&e.name==='QuotaExceededError') toast(t('quotaErr')); });
+}
+async function restoreProject(){
+  if(!DB.ok){ setSaveState('err'); return; }
+  let m; try{ m=await dbGet('meta','project'); }catch(e){ DB.ok=false; setSaveState('err'); return; }
+  if(!m||!m.S){ setSaveState('ok'); return; }
+  restoring=true; let missing=0;
+  for(const r of (m.srcs||[])){ try{ const f=await dbGet('files',r.id); if(!f||!f.blob){ missing++; continue; } await loadSource(f.blob,r.type,r.id,r.name); }catch(e){ missing++; } }
+  Object.keys(S).forEach(k=>delete S[k]); Object.assign(S,m.S); TR();
+  S.clips=S.clips.filter(c=>c.kind==='color'||SRC[c.srcId]); S.audios=S.audios.filter(a=>SRC[a.srcId]);
+  sel=m.sel||null; if(m.pps) pps=m.pps; T=clamp(m.T||0,0,total());
+  hist=[]; fut=[]; lastSnap=snap(); restoring=false;
+  applyRatio(); renderAll(); setSaveState('ok');
+  if(!S.sample) toast(t('restored')+(missing?` · ${missing} ${t('missingFiles')}`:''));
+}
+async function newProject(){
+  pause(); closeTools(); closeTrk(); result=null;
+  for(const x of Object.values(SRC)){ try{ if(x.el&&x.el.pause) x.el.pause(); if(x.el&&x.el.remove) x.el.remove(); URL.revokeObjectURL(x.url); }catch(e){} delete SRC[x.id]; }
+  Object.keys(S).forEach(k=>delete S[k]);
+  Object.assign(S,{tracks:JSON.parse(JSON.stringify(TRACKS0)),ratio:'9:16',bg:{type:'blur',color:'#0B1220',amt:40},clips:[],texts:[],audios:[],exp:{q:720,fps:30},sample:false});
+  sel=null; T=0; hist=[]; fut=[]; lastSnap=snap();
+  try{ await dbClear('files'); }catch(e){}
+  await saveProject(); applyRatio(); renderAll(); toast(t('newDone'));
+}
+document.addEventListener('visibilitychange',()=>{ if(document.hidden && saveTimer) saveProject(); });
+addEventListener('pagehide',()=>{ if(saveTimer) saveProject(); });
+
 /* ---------- boot ---------- */
 const savedTab=store.get('laqta.tab'); if(savedTab && TABS.some(x=>x[0]===savedTab)) tab=savedTab;
 const savedTheme=store.get('laqta.theme'); if(savedTheme==='dark'||savedTheme==='light') document.documentElement.setAttribute('data-theme',savedTheme);
@@ -1467,6 +1524,7 @@ new ResizeObserver(()=>{ fitCanvas(); renderTimeline(); }).observe(stage);
 addEventListener('resize',()=>{ fitCanvas(); renderTimeline(); placeQT(); });
 if(document.fonts){ Promise.all(['700 20px "IBM Plex Sans Arabic"','400 20px "Lalezar"','700 20px "Amiri"','600 20px "Reem Kufi"'].map(f=>document.fonts.load(f,'لقطة Aa').catch(()=>{}))).then(()=>{ dirty=true; }); document.fonts.ready.then(()=>{ dirty=true; }); }
 requestAnimationFrame(frame);
+restoreProject();
 })();
 </script>
 
