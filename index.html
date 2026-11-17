@@ -2,7 +2,9 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <title>استوديو لقطة</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="theme-color" content="#1E7BF0">
@@ -289,7 +291,7 @@ footer b{color:var(--fg);font-weight:600}
 .dragcover{position:fixed;inset:0;z-index:90;background:rgba(10,58,154,.35);display:grid;place-items:center;color:#fff;font-size:20px;font-weight:700;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);pointer-events:none}
 #mediaBox{position:fixed;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none;overflow:hidden}
 
-@media (max-width:899px){
+@media all{
   .brand small,.hide-sm,.save-st span{display:none}
   .time{min-width:0;font-size:12px}
   .grad-btn{padding:0 12px}
@@ -312,6 +314,9 @@ body{height:100%;overflow:hidden}
 .dock .qt-tools{padding:8px 6px;justify-content:safe center}
 .dock .qt-p{border-top:0;border-bottom:1px solid var(--sep);max-height:30vh;overflow-y:auto;padding:12px}
 .dock .ph{display:none}
+.dock .qt-p .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px}
+.dock .qt-p .chips::-webkit-scrollbar{display:none}
+.dock .qt-p .chip{flex:none}
 .dock .grp{padding:10px;background:var(--surface-2)}
 .dock .ratios{display:flex;overflow-x:auto;scrollbar-width:none}
 .dock .rat{flex:none;width:92px}
@@ -325,7 +330,11 @@ body{height:100%;overflow:hidden}
 .tl-card{flex:none;padding:8px 0;border-radius:18px}
 footer{flex:none;margin:0;display:none}
 footer .inner{padding-block:6px 8px;padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px))}
-@media (min-width:900px){ footer{display:block} .editor{gap:10px;overflow-y:auto} .editor .stage{min-height:240px} .dock .qt-p{max-height:24vh} }
+/* mobile-only: on wide screens the app stays phone-sized in the middle */
+.shell{max-width:520px;margin:0 auto;border-inline:1px solid var(--sep);background:var(--bg)}
+html{background:var(--surface-2)}
+body{touch-action:manipulation}
+@media (min-width:560px){ .shell{box-shadow:0 0 60px rgba(0,0,0,.12)} }
 body.focus .dock,body.focus .tl-card{display:none}
 .toast{bottom:auto;top:calc(62px + env(safe-area-inset-top,0px));transform:translate(-50%,-12px)}
 .toast.show{transform:translate(-50%,0)}
@@ -443,7 +452,7 @@ const I18N = {
   saveUnavailable:'الحفظ غير متاح في هذا العرض',declined:'لم يتم الحفظ',tlEmpty:'الخط الزمني فارغ — أضف فيديو أو صوراً',sec:'ث',
   deleted:'تم الحذف',applied:'تم التطبيق على كل المقاطع',recording:'جارٍ التسجيل…',
   lpHint:'المس أي عنصر لأدواته، واضغط مطولاً واسحب لتحريكه',editText:'تعديل النص',editAudio:'تعديل الصوت',
-  transitionShort:'انتقال',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
+  transitionShort:'انتقال',cropT:'اقتصاص',cropFree:'حر',cropProj:'مقاس المشروع',cropHint:'اسحب الإطار أو زواياه على المعاينة.',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
  en:{appName:'Laqta',tagline:'A video editor that runs in your browser',export:'Export',exporting:'Exporting…',timeline:'Timeline',
   footPrivacy:'Everything is processed in your browser. Your files are never uploaded.',footVersion:'Version 0.2',
   media:'Media',edit:'Edit',text:'Text',audio:'Audio',filters:'Filters',canvas:'Canvas',
@@ -480,7 +489,7 @@ const I18N = {
   saveUnavailable:'Saving is not available in this view',declined:'Not saved',tlEmpty:'The timeline is empty. Add videos or photos.',sec:'s',
   deleted:'Deleted',applied:'Applied to all clips',recording:'Recording…',
   lpHint:'Tap an item for its tools. Long-press and drag to move it.',editText:'Edit text',editAudio:'Edit audio',
-  transitionShort:'Transition',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
+  transitionShort:'Transition',cropT:'Crop',cropFree:'Free',cropProj:'Project size',cropHint:'Drag the box or its corners on the preview.',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
 };
 let lang = store.get('laqta.lang') === 'en' ? 'en' : 'ar';
 const t = k => (I18N[lang][k] ?? I18N.ar[k] ?? k);
@@ -523,6 +532,8 @@ const IC = {
  download:'<path d="M12 4v12M7 11l5 5 5-5M5 20h14"/>',
  pencil:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m14 6 4 4"/>',
  pin:'<path d="M12 3v18M8 7h8"/>',
+ crop:'<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/>',
+ ratio:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M7 9v2M7 9h2M17 15v-2M17 15h-2"/>',
  expand:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
  shrink:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',
  eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
@@ -662,6 +673,7 @@ function drawColorClip(c2, W, H, c, local){
     const rg=c2.createRadialGradient(x,y,0,x,y,rr); rg.addColorStop(0,'rgba(255,255,255,.22)'); rg.addColorStop(1,'rgba(255,255,255,0)'); c2.fillStyle=rg; c2.fillRect(0,0,W,H); }
 }
 
+function cropSrc(c,d){ const r=c.crop; if(!r) return {sx:0,sy:0,sw:d.w,sh:d.h}; return {sx:r.x*d.w,sy:r.y*d.h,sw:Math.max(1,r.w*d.w),sh:Math.max(1,r.h*d.h)}; }
 function drawBg(c2,W,H,c){
   const bg=S.bg;
   if(bg.type==='color'){ c2.fillStyle=bg.color; c2.fillRect(0,0,W,H); return; }
@@ -670,7 +682,7 @@ function drawBg(c2,W,H,c){
   const d=c&&drawable(c); if(!d) return;
   const div=6+bg.amt*.35, sw=Math.max(6,Math.round(W/div)), sh=Math.max(6,Math.round(H/div));
   if(bgc.width!==sw||bgc.height!==sh){ bgc.width=sw; bgc.height=sh; }
-  const k=Math.max(sw/d.w, sh/d.h); bx.filter='blur(1px)'; bx.drawImage(d.el,(sw-d.w*k)/2,(sh-d.h*k)/2,d.w*k,d.h*k);
+  const q=cropSrc(c,d), k=Math.max(sw/q.sw, sh/q.sh); bx.filter='blur(1px)'; bx.drawImage(d.el,q.sx,q.sy,q.sw,q.sh,(sw-q.sw*k)/2,(sh-q.sh*k)/2,q.sw*k,q.sh*k);
   c2.save(); c2.filter='brightness(.72) saturate(1.25)'; c2.imageSmoothingEnabled=true; c2.imageSmoothingQuality='high';
   c2.drawImage(bgc,-W*.05,-H*.05,W*1.1,H*1.1); c2.restore();
 }
@@ -681,10 +693,67 @@ function drawMedia(c2,W,H,c,local,o){
   const d=drawable(c); if(!d){ c2.restore(); return; }
   c2.translate(W/2+o.offX,H/2); c2.rotate(c.tf.rot*Math.PI/180); c2.scale(c.tf.fh?-1:1, c.tf.fv?-1:1);
   const r90=c.tf.rot%180!==0, bw=r90?H:W, bh=r90?W:H;
-  const k=(c.tf.fit==='fill'?Math.max(bw/d.w,bh/d.h):Math.min(bw/d.w,bh/d.h))*c.tf.zoom*o.scale;
-  c2.drawImage(d.el,-d.w*k/2,-d.h*k/2,d.w*k,d.h*k); c2.restore();
+  const q=cropSrc(c,d), k=(c.tf.fit==='fill'?Math.max(bw/q.sw,bh/q.sh):Math.min(bw/q.sw,bh/q.sh))*c.tf.zoom*o.scale;
+  c2.drawImage(d.el,q.sx,q.sy,q.sw,q.sh,-q.sw*k/2,-q.sh*k/2,q.sw*k,q.sh*k); c2.restore();
 }
 
+/* crop editor: full source frame with a draggable crop box */
+let cropUI=null, cropDrag=null;
+const cropClip = () => (qt&&qt.type==='clip'&&qt.tool==='crop') ? qtObj() : null;
+function srcDims(c){ const s=SRC[c.srcId]; if(!s||!s.el) return null; return s.type==='video'?{w:s.el.videoWidth,h:s.el.videoHeight}:{w:s.el.naturalWidth,h:s.el.naturalHeight}; }
+function arOf(c){ const v=c.cropAR||'free'; if(v==='free') return 0; const [a,b]=(v==='proj'?S.ratio:v).split(':').map(Number); return a/b; }
+let cropCanvas=false;
+function syncCropCanvas(force){
+  const on=!!cropClip();
+  if(on){ if(cropCanvas&&!force) return; const r=stage.getBoundingClientRect(), w=Math.max(50,r.width-24), h=Math.max(50,r.height-24), k=1280/Math.max(w,h);
+    cropCanvas=true; setRes(Math.round(w*k),Math.round(h*k)); $('#ratioTag').hidden=true; }
+  else if(cropCanvas){ cropCanvas=false; applyRatio(); $('#ratioTag').hidden=false; }
+}
+function drawCropUI(c2,W,H,c){
+  c2.fillStyle='#05080F'; c2.fillRect(0,0,W,H);
+  const d=drawable(c); if(!d){ cropUI=null; return; }
+  const m=.07, k=Math.min(W*(1-2*m)/d.w,H*(1-2*m)/d.h), rw=d.w*k, rh=d.h*k, rx=(W-rw)/2, ry=(H-rh)/2;
+  c2.save(); c2.filter=filterStr(c.fx,0); c2.drawImage(d.el,rx,ry,rw,rh); c2.restore();
+  const r=c.crop||{x:0,y:0,w:1,h:1}, x=rx+r.x*rw, y=ry+r.y*rh, w=r.w*rw, h=r.h*rh, lw=Math.max(2,W*.004), cl=Math.min(w,h,W*.25)*.22, cw=Math.max(5,W*.011);
+  c2.save();
+  c2.fillStyle='rgba(0,0,0,.6)'; c2.beginPath(); c2.rect(rx,ry,rw,rh); c2.rect(x,y,w,h); c2.fill('evenodd');
+  c2.strokeStyle='rgba(255,255,255,.4)'; c2.lineWidth=1; c2.beginPath();
+  for(let i=1;i<3;i++){ c2.moveTo(x+w*i/3,y); c2.lineTo(x+w*i/3,y+h); c2.moveTo(x,y+h*i/3); c2.lineTo(x+w,y+h*i/3); } c2.stroke();
+  c2.strokeStyle='#fff'; c2.lineWidth=lw; c2.strokeRect(x,y,w,h);
+  c2.lineWidth=cw; c2.lineCap='round'; c2.beginPath();
+  for(const [px,py,sx,sy] of [[x,y,1,1],[x+w,y,-1,1],[x,y+h,1,-1],[x+w,y+h,-1,-1]]){ c2.moveTo(px,py+sy*cl); c2.lineTo(px,py); c2.lineTo(px+sx*cl,py); }
+  c2.stroke();
+  if(!arOf(c)){ c2.lineWidth=cw; c2.beginPath(); const e=cl*.7;
+    c2.moveTo(x+w/2-e,y); c2.lineTo(x+w/2+e,y); c2.moveTo(x+w/2-e,y+h); c2.lineTo(x+w/2+e,y+h); c2.moveTo(x,y+h/2-e); c2.lineTo(x,y+h/2+e); c2.moveTo(x+w,y+h/2-e); c2.lineTo(x+w,y+h/2+e); c2.stroke(); }
+  c2.restore();
+  cropUI={rx,ry,rw,rh,sw:d.w,sh:d.h};
+}
+function cropHit(p,c){
+  const u=cropUI; if(!u) return null; const r=c.crop||{x:0,y:0,w:1,h:1}, x=u.rx+r.x*u.rw, y=u.ry+r.y*u.rh, w=r.w*u.rw, h=r.h*u.rh;
+  const tol=26*cv.width/cv.getBoundingClientRect().width, near=(a,b)=>Math.abs(a-b)<=tol;
+  const corners={nw:[x,y],ne:[x+w,y],sw:[x,y+h],se:[x+w,y+h]};
+  for(const k in corners) if(near(p.x,corners[k][0])&&near(p.y,corners[k][1])) return k;
+  if(!arOf(c)){ const inX=p.x>x&&p.x<x+w, inY=p.y>y&&p.y<y+h;
+    if(inX&&near(p.y,y)) return 'n'; if(inX&&near(p.y,y+h)) return 's'; if(inY&&near(p.x,x)) return 'w'; if(inY&&near(p.x,x+w)) return 'e'; }
+  if(p.x>x&&p.x<x+w&&p.y>y&&p.y<y+h) return 'move';
+  return null;
+}
+function cropMove(c,dr,p){
+  const u=cropUI, dx=(p.x-dr.p0.x)/u.rw, dy=(p.y-dr.p0.y)/u.rh, MIN=.08, hit=dr.hit; let {x,y,w,h}=dr.c0;
+  if(hit==='move'){ x=clamp(x+dx,0,1-w); y=clamp(y+dy,0,1-h); }
+  else {
+    let L=x, Tp=y, R=x+w, B=y+h;
+    if(hit.includes('w')) L=clamp(L+dx,0,R-MIN); if(hit.includes('e')) R=clamp(R+dx,L+MIN,1);
+    if(hit.includes('n')) Tp=clamp(Tp+dy,0,B-MIN); if(hit.includes('s')) B=clamp(B+dy,Tp+MIN,1);
+    const ar=arOf(c);
+    if(ar && hit.length===2){ const arN=ar*u.sh/u.sw, west=hit.includes('w'), north=hit.includes('n');
+      const ax=west?x+w:x, ay=north?y+h:y; let nw=Math.max(R-L,(B-Tp)*arN);
+      nw=Math.max(MIN,Math.min(nw, west?ax:1-ax, (north?ay:1-ay)*arN)); const nh=nw/arN;
+      L=west?ax-nw:ax; R=L+nw; Tp=north?ay-nh:ay; B=Tp+nh; }
+    x=L; y=Tp; w=R-L; h=B-Tp;
+  }
+  c.crop={x,y,w,h};
+}
 function render(c2,W,H,time,ui){
   c2.save(); c2.setTransform(1,0,0,1,0,0); c2.filter='none'; c2.globalAlpha=1;
   const cur=currentAt(time);
@@ -693,6 +762,7 @@ function render(c2,W,H,time,ui){
     c2.fillStyle='rgba(255,255,255,.55)'; c2.font=`500 ${Math.round(W*.045)}px ${FONTS.plex}`; c2.textAlign='center'; c2.textBaseline='middle'; c2.fillText(t('emptyCanvas'),W/2,H/2);
   } else {
     const c=cur.c, len=cur.len, local=clamp(time-cur.start,0,len-.001), idx=cur.idx;
+    if(ui && cropClip()===c){ drawCropUI(c2,W,H,c); c2.restore(); return; }
     const o={offX:0, scale:1, blur:0}; let over=null, overA=0;
     if(idx>0 && c.tr!=='none' && local<TD){ const p=ease(local/TD);
       if(c.tr==='fade'){over='#000';overA=1-p;} else if(c.tr==='white'){over='#fff';overA=1-p;}
@@ -990,7 +1060,7 @@ const ADJ=[['bri','brightness',-50,50],['con','contrast',-50,50],['sat','saturat
 function qtObj(){ if(!qt) return null; const arr=qt.type==='clip'?S.clips:qt.type==='text'?S.texts:S.audios; return arr.find(x=>x.id===qt.id)||null; }
 function qtTools(type,o){
   if(type==='clip'){ const v=o.kind==='video', col=o.kind==='color', i=S.clips.indexOf(o);
-    return [['split','scissors','split'], v&&['speed','speed','speed',1], v&&['vol','volume','volume',1], !v&&['dur','clock','duration',1], col&&['colors','swatch','colors',1],
+    return [['split','scissors','split'], !col&&['crop','crop','cropT',1], v&&['speed','speed','speed',1], v&&['vol','volume','volume',1], !v&&['dur','clock','duration',1], col&&['colors','swatch','colors',1],
       !col&&['filter','filters','filters',1], !col&&['adjust','sliders','adjustShort',1], !col&&['rot','rotate','rotate'], !col&&['flip','flipH','flip'],
       !col&&['fit','canvas',o.tf.fit==='fit'?'fill':'fit'], !col&&['zoom','zoomIn','zoom',1], i>0&&['tr','tr','transitionShort',1], ['dup','copy','duplicate'], ['del','trash','delete']].filter(Boolean); }
   if(type==='text') return [['type','pencil','typeText',1],['font','text','font',1],['size','size','size',1],['color','swatch','colorShort',1],['style','box','style',1],['anim','sparkle','anim',1],['dup','copy','duplicate'],['del','trash','delete']];
@@ -1006,6 +1076,7 @@ function qtPanel(type,o,tool){
     case 'filter': return `<div class="strip">${Object.keys(PRESETS).map(p=>`<button class="pre${o.fx.p===p?' on':''}" data-act="preset" data-v="${p}" data-cid="${o.id}"><canvas width="120" height="120" data-pre="${p}"></canvas>${t(PRESET_LABEL[p])}</button>`).join('')}</div>`;
     case 'adjust': { const pr=adjP||'bri', P=ADJ.find(x=>x[0]===pr); return `<div class="chips">${ADJ.map(([k,l])=>`<button class="chip${k===pr?' on':''}" data-qp="${k}">${t(l)}</button>`).join('')}</div>`+rng('f.'+pr,o.fx[pr],P[2],P[3],1,pr==='vig'?'n':'sgn',t(P[1])); }
     case 'zoom': return rng('c.tf.zoom',o.tf.zoom,1,3,.01,'z',t('zoom'));
+    case 'crop': return `<div class="chips">${[['free',t('cropFree')],['proj',t('cropProj')],['1:1','1:1'],['9:16','9:16'],['16:9','16:9'],['4:5','4:5'],['4:3','4:3']].map(([v,l])=>`<button class="chip${(o.cropAR||'free')===v?' on':''}" data-act="cropAR" data-v="${v}"><span dir="ltr">${l}</span></button>`).join('')}</div><p class="hint" style="margin:0">${t('cropHint')}</p><div class="grid2"><button class="btn sm" data-act="cropReset">${t('reset')}</button><button class="btn sm primary" data-act="cropDone">${icon('check',16)} ${t('done')}</button></div>`;
     case 'tr': return chips('c.tr',TRS.map(([v,l])=>[v,t(l)]),o.tr);
   }
   if(type==='text') switch(tool){
@@ -1026,7 +1097,7 @@ function qtPanel(type,o,tool){
   return '';
 }
 let mainTool=null, adjP='bri';
-const MAIN=[['canvas','canvas','canvas',1],['media','media','mediaS'],['music','music','addMusic'],['rec','mic','recShort'],['text','text','text'],['filter','filters','filters',1],['project','film','project',1],['export','export','export',1]];
+const MAIN=[['canvas','ratio','canvas',1],['media','media','mediaS'],['music','music','addMusic'],['rec','mic','recShort'],['text','text','text'],['filter','filters','filters',1],['project','film','project',1],['export','export','export',1]];
 function mainPanel(k){
   if(k==='canvas') return pCanvas();
   if(k==='export') return pExport();
@@ -1057,6 +1128,7 @@ function renderDock(){
   qtEl.querySelector('.qt-tools').scrollLeft=sl; const np=qtEl.querySelector('.qt-p'); if(np) np.scrollTop=sp;
   qtEl.querySelectorAll('input[type=range]').forEach(paintRange);
   if((qt&&qt.tool==='filter')||(!qt&&mainTool==='filter')) drawPresetThumbs();
+  dirty=true; requestAnimationFrame(()=>syncCropCanvas(true));
 }
 function placeQT(){}
 function openTools(type,id){
@@ -1089,7 +1161,9 @@ qtEl.addEventListener('click',e=>{
   const qp=e.target.closest('[data-qp]'); if(qp){ adjP=qp.dataset.qp; renderDock(); return; }
   const tb=e.target.closest('[data-tool]');
   if(tb&&qt){ const k=tb.dataset.tool;
-    if(tb.dataset.p==='1'){ qt.tool=qt.tool===k?null:k; renderDock(); if(k==='type'&&qt.tool) setTimeout(()=>{ const a=$('#qtText'); if(a){ a.focus(); a.select(); } },30); }
+    if(tb.dataset.p==='1'){ qt.tool=qt.tool===k?null:k;
+      if(k==='crop'&&qt.tool){ if(playing) pause(); const lo=layout().find(x=>x.c.id===qt.id); if(lo&&(T<lo.start||T>=lo.start+lo.len)){ T=lo.start+Math.min(.05,lo.len/2); scrollToT(); updTime(); } }
+      renderDock(); dirty=true; if(k==='type'&&qt.tool) setTimeout(()=>{ const a=$('#qtText'); if(a){ a.focus(); a.select(); } },30); }
     else qtAct(k); return; }
   const b=e.target.closest('[data-act]'); if(b&&!b.disabled&&ACTIONS[b.dataset.act]){ ACTIONS[b.dataset.act](b); if(b.dataset.act!=='newProject') renderDock(); }
 });
@@ -1114,6 +1188,13 @@ function select(type,id){ sel={type,id}; renderTimeline(); renderPanel(); dirty=
 /* ---------- canvas interaction (drag text) ---------- */
 let cDrag=null;
 const toCanvas = e => { const r=cv.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width*cv.width, y:(e.clientY-r.top)/r.height*cv.height}; };
+cv.addEventListener('pointerdown',e=>{
+  const c=cropClip(); if(!c) return; e.stopImmediatePropagation(); if(!cropUI) return;
+  const p=toCanvas(e), hit=cropHit(p,c); if(!hit) return;
+  cropDrag={hit,p0:p,c0:Object.assign({x:0,y:0,w:1,h:1},c.crop)}; try{ cv.setPointerCapture(e.pointerId); }catch(_){} e.preventDefault();
+});
+cv.addEventListener('pointermove',e=>{ if(!cropDrag) return; e.stopImmediatePropagation(); const c=cropClip(); if(!c){ cropDrag=null; return; } cropMove(c,cropDrag,toCanvas(e)); dirty=true; });
+cv.addEventListener('pointerup',e=>{ if(cropClip()) e.stopImmediatePropagation(); if(!cropDrag) return; cropDrag=null; commit(); renderTimeline(); });
 cv.addEventListener('pointerdown',e=>{
   if(exp) return; const p=toCanvas(e);
   for(let i=textBoxes.length-1;i>=0;i--){ const b=textBoxes[i];
@@ -1356,6 +1437,12 @@ const ACTIONS={
   ratio(b){ S.ratio=b.dataset.v; result=null; applyRatio(); commit(); renderPanel(); },
   newProject(b){ if(b.dataset.armed){ newProject(); return; } b.dataset.armed='1'; b.classList.add('armed'); b.innerHTML=icon('trash',18)+' '+t('confirmNew');
     setTimeout(()=>{ if(b.isConnected){ delete b.dataset.armed; b.classList.remove('armed'); b.innerHTML=icon('plus',18)+' '+t('newProject'); } },3500); },
+  cropAR(b){ const c=selClip(); if(!c) return; c.cropAR=b.dataset.v; const ar=arOf(c), d=srcDims(c);
+    if(ar&&d&&d.w){ const arN=ar*d.h/d.w, r=c.crop||{x:0,y:0,w:1,h:1}, cx=r.x+r.w/2, cy=r.y+r.h/2; let w=1, h=w/arN; if(h>1){ h=1; w=arN; }
+      c.crop={x:clamp(cx-w/2,0,1-w),y:clamp(cy-h/2,0,1-h),w,h}; }
+    commit(); renderTimeline(); dirty=true; },
+  cropReset(){ const c=selClip(); if(!c) return; c.crop=null; c.cropAR='free'; commit(); dirty=true; },
+  cropDone(){ if(qt) qt.tool=null; dirty=true; syncCropCanvas(); },
   export(){ startExport(); }, cancelExport(){ endExport(true); },
   saveFile(){ saveResult(); }, newExport(){ result=null; renderPanel(); }
 };
@@ -1516,7 +1603,7 @@ const savedTab=store.get('laqta.tab'); if(savedTab && TABS.some(x=>x[0]===savedT
 const savedTheme=store.get('laqta.theme'); if(savedTheme==='dark'||savedTheme==='light') document.documentElement.setAttribute('data-theme',savedTheme);
 if(lang==='en' && S.sample){ S.texts[0].text=t('sampleTitleText'); S.texts[1].text=t('sampleSubText'); lastSnap=snap(); }
 applyRatio(); applyLang(); updPlayBtn(); updTime(); updUndo();
-new ResizeObserver(()=>{ fitCanvas(); renderTimeline(); }).observe(stage);
+new ResizeObserver(()=>{ if(cropCanvas) syncCropCanvas(true); else fitCanvas(); renderTimeline(); }).observe(stage);
 addEventListener('resize',()=>{ fitCanvas(); renderTimeline(); placeQT(); });
 if(document.fonts){ Promise.all(['700 20px "IBM Plex Sans Arabic"','400 20px "Lalezar"','700 20px "Amiri"','600 20px "Reem Kufi"'].map(f=>document.fonts.load(f,'لقطة Aa').catch(()=>{}))).then(()=>{ dirty=true; }); document.fonts.ready.then(()=>{ dirty=true; }); }
 requestAnimationFrame(frame);
