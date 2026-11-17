@@ -317,6 +317,19 @@ body{height:100%;overflow:hidden}
 .dock .qt-tools{padding:8px 6px;justify-content:safe center}
 .dock .qt-p{border-top:0;border-bottom:1px solid var(--sep);max-height:30vh;overflow-y:auto;padding:12px}
 .dock .ph{display:none}
+.glyph{font-size:19px;line-height:1}
+.gbox{padding:2px 6px;border-radius:6px;background:var(--fg);color:var(--surface);font-weight:800;font-size:16px}
+.qt-t.on .gbox{background:#fff;color:var(--blue-2)}
+.gout{font-weight:800;color:transparent;-webkit-text-stroke:1.6px var(--fg)}
+.qt-t.on .gout{-webkit-text-stroke-color:#fff}
+.tx-in{min-height:44px;max-height:96px}
+.cdot{width:24px;height:24px;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(255,255,255,.75),0 0 0 1px var(--sep)}
+.qt-t.step{width:auto;padding-inline:4px}
+.qstep{width:auto!important;display:flex!important;align-items:center;gap:0;padding:0 2px}
+.qstep button{width:30px;height:40px;font-size:21px;font-weight:600;border-radius:10px}
+.qstep button:active{background:var(--fill-2)}
+.qstep b{min-width:26px;text-align:center;font-variant-numeric:tabular-nums;font-size:15px;cursor:pointer}
+.tx-in{width:100%;min-height:44px;resize:none;border-radius:12px;border:1px solid var(--sep);background:var(--surface-2);padding:10px 12px;font-size:16px;line-height:1.4}
 .flist{display:flex;flex-direction:column;gap:6px}
 .fitem{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:12px;background:var(--fill);text-align:start;width:100%}
 .fitem .fs{flex:1;min-width:0;font-size:21px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -464,7 +477,7 @@ const I18N = {
   saveUnavailable:'الحفظ غير متاح في هذا العرض',declined:'لم يتم الحفظ',tlEmpty:'الخط الزمني فارغ — أضف فيديو أو صوراً',sec:'ث',
   deleted:'تم الحذف',applied:'تم التطبيق على كل المقاطع',recording:'جارٍ التسجيل…',
   lpHint:'المس أي عنصر لأدواته، واضغط مطولاً واسحب لتحريكه',editText:'تعديل النص',editAudio:'تعديل الصوت',
-  transitionShort:'انتقال',format:'تنسيق',weight:'السُمك',skew:'الميل',storage:'التخزين على الجهاز',storageUsed:'المساحة المستخدمة',deleteProject:'حذف المشروع',confirmDelete:'اضغط مجدداً لحذف المشروع وكل ملفاته',projDeleted:'تم حذف المشروع وتنظيف كل ملفاته',frame:'إطار',frNone:'بدون',frColor:'لون',frImage:'إطار خاص',frSize:'السمك',frOpacity:'الشفافية',frRadius:'استدارة الزوايا',frSolid:'صلب',frDouble:'مزدوج',frGlow:'توهج',frPick:'اختيار إطار من جهازك',frReplace:'تغيير صورة الإطار',frImgHint:'استخدم صورة PNG بوسط شفاف، وستُمدّ على كامل الفيديو.',frAdded:'تمت إضافة الإطار',frIn:'داخل الفيديو',frOut:'خارج الفيديو',frInHint:'يُرسم الإطار فوق أطراف الفيديو ويغطي جزءاً منها.',frOutHint:'يُضاف الإطار حول الفيديو ويكبر مقاسه، والفيديو داخله يبقى كاملاً.',frDelete:'حذف الإطار',frDeleted:'تم حذف الإطار',cropT:'اقتصاص',cropResized:'أصبح مقاس الفيديو',ratioCustom:'مقاس مخصص من الاقتصاص',cropSize:'الأبعاد',cropFree:'حر',cropProj:'مقاس المشروع',cropHint:'اسحب الإطار أو زواياه على المعاينة.',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
+  transitionShort:'انتقال',italic:'مائل',textColor:'لون النص',format:'تنسيق',weight:'السُمك',skew:'الميل',storage:'التخزين على الجهاز',storageUsed:'المساحة المستخدمة',deleteProject:'حذف المشروع',confirmDelete:'اضغط مجدداً لحذف المشروع وكل ملفاته',projDeleted:'تم حذف المشروع وتنظيف كل ملفاته',frame:'إطار',frNone:'بدون',frColor:'لون',frImage:'إطار خاص',frSize:'السمك',frOpacity:'الشفافية',frRadius:'استدارة الزوايا',frSolid:'صلب',frDouble:'مزدوج',frGlow:'توهج',frPick:'اختيار إطار من جهازك',frReplace:'تغيير صورة الإطار',frImgHint:'استخدم صورة PNG بوسط شفاف، وستُمدّ على كامل الفيديو.',frAdded:'تمت إضافة الإطار',frIn:'داخل الفيديو',frOut:'خارج الفيديو',frInHint:'يُرسم الإطار فوق أطراف الفيديو ويغطي جزءاً منها.',frOutHint:'يُضاف الإطار حول الفيديو ويكبر مقاسه، والفيديو داخله يبقى كاملاً.',frDelete:'حذف الإطار',frDeleted:'تم حذف الإطار',cropT:'اقتصاص',cropResized:'أصبح مقاس الفيديو',ratioCustom:'مقاس مخصص من الاقتصاص',cropSize:'الأبعاد',cropFree:'حر',cropProj:'مقاس المشروع',cropHint:'اسحب الإطار أو زواياه على المعاينة.',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
  en:{appName:'Laqta',tagline:'A video editor that runs in your browser',export:'Export',exporting:'Exporting…',timeline:'Timeline',
   footPrivacy:'Everything is processed in your browser. Your files are never uploaded.',footVersion:'Version 0.2',
   media:'Media',edit:'Edit',text:'Text',audio:'Audio',filters:'Filters',canvas:'Canvas',
@@ -501,7 +514,7 @@ const I18N = {
   saveUnavailable:'Saving is not available in this view',declined:'Not saved',tlEmpty:'The timeline is empty. Add videos or photos.',sec:'s',
   deleted:'Deleted',applied:'Applied to all clips',recording:'Recording…',
   lpHint:'Tap an item for its tools. Long-press and drag to move it.',editText:'Edit text',editAudio:'Edit audio',
-  transitionShort:'Transition',format:'Format',weight:'Weight',skew:'Slant',storage:'Storage on this device',storageUsed:'Space used',deleteProject:'Delete project',confirmDelete:'Tap again to delete the project and all its files',projDeleted:'Project deleted and all its files cleaned up',frame:'Frame',frNone:'None',frColor:'Color',frImage:'Custom',frSize:'Thickness',frOpacity:'Transparency',frRadius:'Corner radius',frSolid:'Solid',frDouble:'Double',frGlow:'Glow',frPick:'Choose a frame from your device',frReplace:'Replace frame image',frImgHint:'Use a PNG with a transparent center. It stretches over the whole video.',frAdded:'Frame added',frIn:'Inside video',frOut:'Outside video',frInHint:'The frame is drawn over the video edges and covers part of them.',frOutHint:'The frame is added around the video and enlarges it; the video inside stays whole.',frDelete:'Remove frame',frDeleted:'Frame removed',cropT:'Crop',cropResized:'Video size is now',ratioCustom:'Custom size from crop',cropSize:'Size',cropFree:'Free',cropProj:'Project size',cropHint:'Drag the box or its corners on the preview.',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
+  transitionShort:'Transition',italic:'Italic',textColor:'Text color',format:'Format',weight:'Weight',skew:'Slant',storage:'Storage on this device',storageUsed:'Space used',deleteProject:'Delete project',confirmDelete:'Tap again to delete the project and all its files',projDeleted:'Project deleted and all its files cleaned up',frame:'Frame',frNone:'None',frColor:'Color',frImage:'Custom',frSize:'Thickness',frOpacity:'Transparency',frRadius:'Corner radius',frSolid:'Solid',frDouble:'Double',frGlow:'Glow',frPick:'Choose a frame from your device',frReplace:'Replace frame image',frImgHint:'Use a PNG with a transparent center. It stretches over the whole video.',frAdded:'Frame added',frIn:'Inside video',frOut:'Outside video',frInHint:'The frame is drawn over the video edges and covers part of them.',frOutHint:'The frame is added around the video and enlarges it; the video inside stays whole.',frDelete:'Remove frame',frDeleted:'Frame removed',cropT:'Crop',cropResized:'Video size is now',ratioCustom:'Custom size from crop',cropSize:'Size',cropFree:'Free',cropProj:'Project size',cropHint:'Drag the box or its corners on the preview.',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
 };
 let lang = store.get('laqta.lang') === 'en' ? 'en' : 'ar';
 const t = k => (I18N[lang][k] ?? I18N.ar[k] ?? k);
@@ -1165,7 +1178,7 @@ function qtTools(type,o){
     return [['split','scissors','split'], !col&&['crop','crop','cropT',1], v&&['speed','speed','speed',1], v&&['vol','volume','volume',1], !v&&['dur','clock','duration',1], col&&['colors','swatch','colors',1],
       !col&&['filter','filters','filters',1], !col&&['adjust','sliders','adjustShort',1], !col&&['rot','rotate','rotate'], !col&&['flip','flipH','flip'],
       !col&&['fit','canvas',o.tf.fit==='fit'?'fill':'fit'], !col&&['zoom','zoomIn','zoom',1], i>0&&['tr','tr','transitionShort',1], ['dup','copy','duplicate'], ['del','trash','delete']].filter(Boolean); }
-  if(type==='text') return [['format','sliders','format',1],['font','text','font',1],['type','pencil','typeText',1],['color','swatch','colorShort',1],['style','box','style',1],['anim','sparkle','anim',1],['dup','copy','duplicate'],['del','trash','delete']];
+  if(type==='text') return [['font','text','font',1],['color','swatch','colorShort',1],['adjust','sliders','adjustShort',1],['anim','sparkle','anim',1],['dup','copy','duplicate'],['del','trash','delete']];
   return [['vol','volume','volume',1],['speed','speed','speed',1],['afx','filters','audioFx',1],['eq','sliders','eq',1],['fade','fade','fades',1],['split','scissors','split'],['here','pin','toHead'],['dup','copy','duplicate'],['del','trash','delete']];
 }
 const fontsHTML = x => `<div class="fonts">${[['plex','نص','Plex'],['lalezar','لقطة','Lalezar'],['amiri','قلم','Amiri'],['reem','كوفي','Reem Kufi']].map(([f,s,n])=>`<button class="fontb${x.font===f?' on':''}" style="font-family:${FONTS[f].replace(/"/g,"'")}" data-act="set" data-k="t.font" data-v="${f}">${s}<small>${n}</small></button>`).join('')}</div>`;
@@ -1187,7 +1200,8 @@ function qtPanel(type,o,tool){
       return `<div class="flist">${FONT_LIST.map(([k,f,,lab])=>`<button class="fitem${o.font===k?' on':''}" data-act="set" data-k="t.font" data-v="${k}"><span class="fs" style="font-family:'${f}',sans-serif">${sample}</span><small>${lab}</small>${o.font===k?icon('check',18):''}</button>`).join('')}</div>`; }
     case 'format': return rng('t.size',o.size,3,24,.1,'n',t('size'))+rng('t.weight',o.weight||(o.bold?700:400),100,900,100,'n',t('weight'))+rng('t.skew',o.skew||0,-30,30,1,'deg',t('skew'))+rng('t.tr',o.tr||0,0,.95,.01,'pct',t('frOpacity'));
     case 'size': return rng('t.size',o.size,3,24,.1,'n',t('size'));
-    case 'color': return swatches('t.color',o.color);
+    case 'color': return `<div class="ctl-h"><span>${t('textColor')}</span></div>`+swatches('t.color',o.color)+(o.style==='box'?`<div class="ctl-h"><span>${t('boxColor')}</span></div>`+swatches('t.bg',o.bg):'');
+    case 'adjust': return rng('t.size',o.size,3,30,.1,'n',t('size'))+rng('t.weight',o.weight||(o.bold?700:400),100,900,100,'n',t('weight'))+rng('t.skew',o.skew||0,-30,30,1,'deg',t('skew'))+rng('t.tr',o.tr||0,0,.95,.01,'pct',t('frOpacity'));
     case 'style': return chips('t.style',[['plain',t('stPlain')],['shadow',t('stShadow')],['outline',t('stOutline')],['box',t('stBox')]],o.style)+(o.style==='box'?swatches('t.bg',o.bg):'');
     case 'anim': return chips('t.anim',[['none',t('anNone')],['fade',t('anFade')],['pop',t('anPop')],['slide',t('anSlide')],['type',t('anType')]],o.anim);
   }
@@ -1224,6 +1238,33 @@ function mainPanel(k){
   return '';
 }
 function renderQT(){ renderDock(); }
+/* one text bar: quick toggles act at once, the rest open their options above the bar */
+function textBar(o){
+  const fam=(FONT_LIST.find(f=>f[0]===o.font)||FONT_LIST[0]), w=o.weight||(o.bold?700:400);
+  const tb=(k,inner,label,on,opens,cls='')=>`<button class="qt-t${on?' on':''}${cls?' '+cls:''}" ${opens?`data-tool="${k}" data-p="1"`:`data-tx="${k}"`} aria-label="${label}"><span class="qi">${inner}</span><span>${label}</span></button>`;
+  return tb('font',`<span class="glyph" style="font-family:'${fam[1]}',sans-serif">Aa</span>`,fam[3],qt.tool==='font',1)
+    +`<div class="qt-t step"><span class="qi qstep"><button data-tx="size-" aria-label="−">−</button><b data-tool="adjust" data-p="1">${Math.round(o.size)}</b><button data-tx="size+" aria-label="+">+</button></span><span>${t('size')}</span></div>`
+    +tb('bold','<span class="glyph" style="font-weight:800">B</span>',t('bold'),w>=600,0)
+    +tb('italic','<span class="glyph" style="font-style:italic;font-family:Georgia,serif;font-weight:700">I</span>',t('italic'),!!o.skew,0)
+    +tb('color',`<span class="cdot" style="background:${o.color}"></span>`,t('colorShort'),qt.tool==='color',1)
+    +tb('adjust',icon('sliders',21),t('adjustShort'),qt.tool==='adjust',1)
+    +tb('st-shadow','<span class="glyph" style="font-weight:800;text-shadow:0 2px 3px rgba(0,0,0,.55)">A</span>',t('stShadow'),o.style==='shadow',0)
+    +tb('st-outline','<span class="glyph gout">A</span>',t('stOutline'),o.style==='outline',0)
+    +tb('st-box','<span class="glyph gbox">A</span>',t('stBox'),o.style==='box',0)
+    +tb('anim',icon('sparkle',21),t('anim'),qt.tool==='anim',1)
+    +tb('dup',icon('copy',21),t('duplicate'),false,0)
+    +tb('del',icon('trash',21),t('delete'),false,0,'danger');
+}
+function textAct(k){
+  const o=qtObj(); if(!o) return;
+  if(k==='del'){ ACTIONS.delText(); closeTools(); return; }
+  if(k==='dup'){ ACTIONS.dupText(); if(sel) qt.id=sel.id; renderDock(); return; }
+  if(k==='size-') o.size=clamp(Math.round(o.size)-1,3,30); else if(k==='size+') o.size=clamp(Math.round(o.size)+1,3,30);
+  else if(k==='bold'){ const w=o.weight||(o.bold?700:400); o.weight=w>=600?400:700; o.bold=o.weight>=600; }
+  else if(k==='italic') o.skew=o.skew?0:12;
+  else if(k.startsWith('st-')){ const v=k.slice(3); o.style=o.style===v?'plain':v; if(v==='box'&&o.style==='box') qt.tool='color'; }
+  commit(); dirty=true; renderTimeline(); renderDock();
+}
 function renderDock(){
   const mode=qt?'item':'main', oldT=qtEl.querySelector('.qt-tools'), sl=oldT&&qtEl.dataset.mode===mode?oldT.scrollLeft:0, oldP=qtEl.querySelector('.qt-p'), sp=oldP?oldP.scrollTop:0;
   let tools='', panel='';
@@ -1231,8 +1272,9 @@ function renderDock(){
     const o=qtObj(); if(!o){ qt=null; return renderDock(); }
     const list=qtTools(qt.type,o); if(qt.tool && !list.some(x=>x[0]===qt.tool&&x[3])) qt.tool=null;
     tools=`<button class="qt-t back-t" data-qa="close"><span class="qi">${icon('check',21)}</span><span>${t('done')}</span></button>`+
-      list.map(([k,ic,l,p])=>`<button class="qt-t${qt.tool===k?' on':''}${k==='del'?' danger':''}" data-tool="${k}" data-p="${p?1:0}"><span class="qi">${icon(ic,21)}</span><span>${t(l)}</span></button>`).join('');
-    if(qt.tool) panel=qtPanel(qt.type,o,qt.tool);
+      (qt.type==='text' ? textBar(o) : list.map(([k,ic,l,p])=>`<button class="qt-t${qt.tool===k?' on':''}${k==='del'?' danger':''}" data-tool="${k}" data-p="${p?1:0}"><span class="qi">${icon(ic,21)}</span><span>${t(l)}</span></button>`).join(''));
+    if(qt.type==='text') panel=`<textarea class="tx-in" data-k="t.text" dir="auto" rows="1" id="qtText" placeholder="${t('newText')}">${esc(o.text)}</textarea>`+(qt.tool?qtPanel('text',o,qt.tool):'');
+    else if(qt.tool) panel=qtPanel(qt.type,o,qt.tool);
   } else {
     tools=MAIN.map(([k,ic,l,p])=>{ const r=k==='rec'&&recState; return `<button class="qt-t${mainTool===k?' on':''}${r?' rec':''}" data-main="${k}" data-p="${p?1:0}"><span class="qi">${icon(r?'stop':ic,21)}</span><span>${r?t('stopRec'):t(l)}</span></button>`; }).join('');
     if(mainTool) panel=mainPanel(mainTool);
@@ -1248,7 +1290,7 @@ function renderDock(){
 function placeQT(){}
 function openTools(type,id){
   if(exp) return; sel={type,id};
-  qt={type,id,tool:(qt&&qt.type===type&&qt.tool)||(type==='text'?'format':null)}; mainTool=null;
+  qt={type,id,tool:qt&&qt.type===type?qt.tool:null}; mainTool=null;
   renderDock(); dirty=true;
 }
 function closeTools(keepSel){ const had=!!qt; qt=null; if(!keepSel){ sel=null; if(had){ renderTimeline(); dirty=true; } } renderDock(); }
@@ -1270,9 +1312,10 @@ qtEl.addEventListener('click',e=>{
     if(m.dataset.p==='1'){ mainTool=mainTool===k?null:k; renderDock(); return; }
     mainTool=null;
     if(k==='media') $('#inMedia').click(); else if(k==='music') $('#inAudio').click(); else if(k==='rec') toggleRecord();
-    else if(k==='text'){ ACTIONS.addText(); if(sel&&sel.type==='text'){ openTools('text',sel.id); qt.tool='type'; renderDock(); setTimeout(()=>{ const a=$('#qtText'); if(a){ a.focus(); a.select(); } },40); } }
+    else if(k==='text'){ ACTIONS.addText(); if(sel&&sel.type==='text'){ openTools('text',sel.id); qt.tool=null; renderDock(); setTimeout(()=>{ const a=$('#qtText'); if(a){ a.focus(); a.select(); } },40); } }
     renderDock(); return; }
   if(e.target.closest('[data-qa="close"]')){ closeTools(); return; }
+  const tx=e.target.closest('[data-tx]'); if(tx&&qt&&qt.type==='text'){ textAct(tx.dataset.tx); return; }
   const qp=e.target.closest('[data-qp]'); if(qp){ adjP=qp.dataset.qp; renderDock(); return; }
   const tb=e.target.closest('[data-tool]');
   if(tb&&qt){ const k=tb.dataset.tool;
