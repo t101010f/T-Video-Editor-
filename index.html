@@ -218,6 +218,26 @@ input[type=color]::-webkit-color-swatch{border:0;border-radius:50%;box-shadow:in
 .tl-labels{position:absolute;left:8px;top:24px;display:flex;flex-direction:column;gap:6px;pointer-events:none;z-index:4}
 .tl-labels span{width:28px;height:36px;border-radius:8px;display:grid;place-items:center;background:var(--glass);color:var(--muted);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 .5px var(--sep)}
 .tl-labels span.v{height:66px}
+.tl-labels{pointer-events:auto}
+.tl-labels button{position:relative;width:30px;height:36px;border-radius:9px;display:grid;place-items:center;background:var(--glass);color:var(--fg);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 .5px var(--sep),0 2px 8px rgba(0,0,0,.08);transition:transform .12s}
+.tl-labels button:active{transform:scale(.92)}
+.tl-labels button.v{height:66px}
+.tl-labels button .st{position:absolute;top:4px;right:4px;width:8px;height:8px;border-radius:50%;background:#34C759;box-shadow:0 0 0 2px var(--surface)}
+.tl-labels button .st.off{background:#FF3B30}
+.tl-labels button .st.half{background:#FF9F0A}
+.tl-labels button .lk{position:absolute;bottom:2px;right:2px;color:var(--muted);display:none}
+.tl-labels button.locked .lk{display:block}
+.tl-labels button.dim > svg:first-child{opacity:.4}
+.track.off .blk{opacity:.35;filter:grayscale(.8)}
+.track.locked{background-image:repeating-linear-gradient(135deg,transparent 0 8px,var(--fill) 8px 10px)}
+.track.locked .blk{cursor:not-allowed}
+.trk{min-width:250px}
+.trk-row{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;cursor:pointer;font-size:14px}
+.trk-row:hover{background:var(--fill)}
+.trk-row .ri{width:30px;height:30px;border-radius:9px;background:var(--fill);display:grid;place-items:center;flex:none}
+.trk-row .rl{flex:1;min-width:0}
+.trk-sl{padding:2px 10px 8px}
+.switch.rg:not(:checked){background:#FF3B30}
 .ctx{position:fixed;z-index:95;min-width:220px;max-width:calc(100vw - 24px);padding:6px;border-radius:16px;background:var(--glass);-webkit-backdrop-filter:saturate(180%) blur(24px);backdrop-filter:saturate(180%) blur(24px);box-shadow:0 18px 50px rgba(0,0,0,.28),0 0 0 .5px var(--sep);animation:ctxIn .18s ease-out}
 @keyframes ctxIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
 .ctx-h{padding:6px 12px 4px;font-size:12px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -351,7 +371,7 @@ footer b{color:var(--fg);font-weight:600}
           </div>
         </div>
         <div class="playhead"></div>
-        <div class="tl-labels" id="tlLabels" aria-hidden="true"><span class="v"></span><span></span><span></span></div>
+        <div class="tl-labels" id="tlLabels"><button class="v" data-tr="v"></button><button data-tr="t"></button><button data-tr="a"></button></div>
         <div class="tl-empty" id="tlEmpty" hidden></div>
       </div>
     </section>
@@ -370,6 +390,7 @@ footer b{color:var(--fg);font-weight:600}
 <div id="mediaBox" aria-hidden="true"></div>
 <div class="toast" id="toast" role="status"></div>
 <div class="qt" id="qt" role="toolbar" hidden></div>
+<div class="ctx trk" id="trk" role="menu" hidden></div>
 <div class="dragcover" id="dragCover" hidden></div>
 
 <script>
@@ -422,7 +443,7 @@ const I18N = {
   saveUnavailable:'الحفظ غير متاح في هذا العرض',declined:'لم يتم الحفظ',tlEmpty:'الخط الزمني فارغ — أضف فيديو أو صوراً',sec:'ث',
   deleted:'تم الحذف',applied:'تم التطبيق على كل المقاطع',recording:'جارٍ التسجيل…',
   lpHint:'المس أي عنصر لأدواته، واضغط مطولاً واسحب لتحريكه',editText:'تعديل النص',editAudio:'تعديل الصوت',
-  transitionShort:'انتقال',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
+  transitionShort:'انتقال',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
  en:{appName:'Laqta',tagline:'A video editor that runs in your browser',export:'Export',exporting:'Exporting…',timeline:'Timeline',
   footPrivacy:'Everything is processed in your browser. Your files are never uploaded.',footVersion:'Version 0.1',
   media:'Media',edit:'Edit',text:'Text',audio:'Audio',filters:'Filters',canvas:'Canvas',
@@ -459,7 +480,7 @@ const I18N = {
   saveUnavailable:'Saving is not available in this view',declined:'Not saved',tlEmpty:'The timeline is empty. Add videos or photos.',sec:'s',
   deleted:'Deleted',applied:'Applied to all clips',recording:'Recording…',
   lpHint:'Tap an item for its tools. Long-press and drag to move it.',editText:'Edit text',editAudio:'Edit audio',
-  transitionShort:'Transition',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
+  transitionShort:'Transition',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
 };
 let lang = store.get('laqta.lang') === 'en' ? 'en' : 'ar';
 const t = k => (I18N[lang][k] ?? I18N.ar[k] ?? k);
@@ -502,6 +523,9 @@ const IC = {
  download:'<path d="M12 4v12M7 11l5 5 5-5M5 20h14"/>',
  pencil:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m14 6 4 4"/>',
  pin:'<path d="M12 3v18M8 7h8"/>',
+ eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+ eyeOff:'<path d="M3 3l18 18M10.6 5.1A10 10 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4M6.6 6.6A17 17 0 0 0 2 12s3.6 7 10 7a9.7 9.7 0 0 0 5.4-1.6M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+ lock:'<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/>',
  speed:'<path d="M4 16a8 8 0 1 1 16 0"/><path d="m12 16 4.5-5"/><circle cx="12" cy="16" r="1.2" fill="currentColor"/>',
  volume:'<path d="M4 10v4h4l5 4V6L8 10z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a8 8 0 0 1 0 11"/>',
  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
@@ -521,7 +545,8 @@ const PRESET_LABEL = {none:'pNone',vivid:'pVivid',warm:'pWarm',cool:'pCool',mono
 const TRS = [['none','trNone'],['fade','trFade'],['white','trWhite'],['zoom','trZoom'],['slide','trSlide'],['blur','trBlur']];
 const TD = 0.6;
 
-const S = {ratio:'9:16', bg:{type:'blur', color:'#0B1220', amt:40}, clips:[], texts:[], audios:[], exp:{q:720, fps:30}, sample:true};
+const TRACKS0={v:{on:true,mute:false,lock:false,vol:1},t:{on:true,lock:false},a:{on:true,lock:false,vol:1}};
+const S = {tracks:JSON.parse(JSON.stringify(TRACKS0)), ratio:'9:16', bg:{type:'blur', color:'#0B1220', amt:40}, clips:[], texts:[], audios:[], exp:{q:720, fps:30}, sample:true};
 const SRC = {};
 let sel = null, tab = 'media', T = 0, playing = false, playStartT = 0, playStartNow = 0, dirty = true, pps = 60;
 let holdSince = 0, textBoxes = [], exp = null, result = null, recState = null;
@@ -538,6 +563,8 @@ function seedSample(){
 }
 seedSample();
 
+const TR = () => (S.tracks || (S.tracks=JSON.parse(JSON.stringify(TRACKS0))));
+const TKEY = {clip:'v',text:'t',audio:'a'};
 const aLen = a => (a.out-a.in)/(a.speed||1);
 const AFX={none:{},bass:{low:8},bright:{high:7},voice:{hp:120,pres:6,low:-3},phone:{hp:450,lp:3200,pres:7},radio:{hp:250,lp:5000,mid:4},muffled:{lp:650},echo:{echo:1},hall:{rev:1}};
 const AFX_LABEL={none:'fxNone',bass:'fxBass',bright:'fxBright',voice:'fxVoice',phone:'fxPhone',radio:'fxRadio',muffled:'fxMuffled',echo:'fxEcho',hall:'fxHall'};
@@ -672,12 +699,13 @@ function render(c2,W,H,time,ui){
     if(nx && nx.tr!=='none' && nx.tr!=='slide' && local>len-TD){ const p=ease((local-(len-TD))/TD);
       if(nx.tr==='fade'){over='#000';overA=Math.max(overA,p);} else if(nx.tr==='white'){over='#fff';overA=Math.max(overA,p);}
       else if(nx.tr==='zoom'){o.scale*=1+.12*p; over='#000'; overA=Math.max(overA,p*.5);} else if(nx.tr==='blur'){o.blur=Math.max(o.blur,p*W*.03);} }
-    if(c.kind==='color') { c2.fillStyle='#000'; c2.fillRect(0,0,W,H); } else drawBg(c2,W,H,c);
-    drawMedia(c2,W,H,c,local,o);
+    if(!TR().v.on){ c2.fillStyle='#000'; c2.fillRect(0,0,W,H); }
+    else { if(c.kind==='color') { c2.fillStyle='#000'; c2.fillRect(0,0,W,H); } else drawBg(c2,W,H,c);
+      drawMedia(c2,W,H,c,local,o); }
     if(c.fx.vig>0){ const rg=c2.createRadialGradient(W/2,H/2,Math.min(W,H)*.25,W/2,H/2,Math.hypot(W,H)/2); rg.addColorStop(0,'rgba(0,0,0,0)'); rg.addColorStop(1,`rgba(0,0,0,${(c.fx.vig/100*.8).toFixed(3)})`); c2.fillStyle=rg; c2.fillRect(0,0,W,H); }
     if(over&&overA>0){ c2.globalAlpha=clamp(overA,0,1); c2.fillStyle=over; c2.fillRect(0,0,W,H); c2.globalAlpha=1; }
   }
-  drawTexts(c2,W,H,time,ui);
+  if(TR().t.on) drawTexts(c2,W,H,time,ui); else textBoxes=[];
   c2.restore();
 }
 
@@ -721,7 +749,7 @@ function syncMedia(){
     const isCur = cur && cur.c.kind==='video' && cur.c.srcId===s.id;
     if(isCur){
       const c=cur.c, local=clamp(T-cur.start,0,cur.len), target=c.in+local*c.speed;
-      setVol(s, c.muted?0:c.vol);
+      setVol(s, (c.muted||TR().v.mute)?0:c.vol*TR().v.vol);
       if(playing){
         if(Math.abs(s.el.playbackRate-c.speed)>.001) s.el.playbackRate=c.speed;
         if(s.el.paused){ if(target<c.out-.03){ if(Math.abs(s.el.currentTime-target)>.08) s.el.currentTime=target; s.blocked=false; s.el.play().catch(()=>{s.blocked=true;}); } }
@@ -741,7 +769,7 @@ function syncMedia(){
       const kp=a.pitch!==false; if(s.el.preservesPitch!==kp){ s.el.preservesPitch=kp; s.el.webkitPreservesPitch=kp; }
       applyAFX(s,a);
       if(s.el.paused){ s.el.currentTime=target; s.el.play().catch(()=>{}); } else if(!s.el.seeking && Math.abs(s.el.currentTime-target)>.3*sp) s.el.currentTime=target;
-      let gv=a.vol; if(a.fin) gv*=clamp((T-a.start)/1.5,0,1); if(a.fout) gv*=clamp((a.start+len-T)/1.5,0,1); setVol(s,gv);
+      let gv=a.vol; if(a.fin) gv*=clamp((T-a.start)/1.5,0,1); if(a.fout) gv*=clamp((a.start+len-T)/1.5,0,1); gv*=TR().a.on?TR().a.vol:0; setVol(s,gv);
     } else if(!s.el.paused) s.el.pause();
   }
 }
@@ -800,6 +828,7 @@ function renderTimeline(){
   $('#trT').innerHTML=S.texts.map(x=>{ const on=sel&&sel.id===x.id; return `<div class="blk txb${on?' sel':''}" data-text="${x.id}" style="left:${x.start*pps}px;width:${Math.max(8,(x.end-x.start)*pps)}px">${on?HD:''}<span>${esc(x.text.split('\n')[0])}</span></div>`; }).join('');
   $('#trA').innerHTML=S.audios.map(a=>{ const s=SRC[a.srcId], on=sel&&sel.id===a.id; const sp=a.speed||1, w=s&&s.wave?`background-image:url(${s.wave});background-size:${(s.duration||1)/sp*pps}px 100%;background-position:${-a.in/sp*pps}px 0;`:'';
     return `<div class="blk aub${on?' sel':''}" data-audio="${a.id}" style="left:${a.start*pps}px;width:${Math.max(8,aLen(a)*pps)}px;${w}">${on?HD:''}<span>${esc(a.name)}${sp!==1?` · ${sp}×`:''}</span></div>`; }).join('');
+  updTrackHeads();
   const em=$('#tlEmpty'); em.hidden=S.clips.length>0; em.textContent=t('tlEmpty');
   scrollToT();
 }
@@ -820,6 +849,7 @@ function gStart(target,x,y,isTouch,pid){
   if(exp) return false;
   const b=target.closest('.blk'); if(!b) return false;
   const {type,obj}=blkObj(b); if(!obj) return false;
+  if(TR()[TKEY[type]].lock){ if(!g) toast(t('trackLocked')); return false; }
   const L=layout();
   g={type,obj,el:b,x0:x,y0:y,pid,touch:isTouch,mode:null,orig:JSON.parse(JSON.stringify(obj)),
      L,lo:type==='clip'?L.find(o=>o.c===obj):null,left0:parseFloat(b.style.left),w0:parseFloat(b.style.width),lp:0,dx:0};
@@ -899,6 +929,55 @@ function gEnd(cancel){
 }
 tlInner.addEventListener('contextmenu',e=>{ if(e.target.closest('.blk')) e.preventDefault(); });
 tlInner.addEventListener('click',e=>{ if(e.target.closest('.add-end')&&!exp) $('#inMedia').click(); });
+
+/* track headers: status dot + popover with show/hide, sound, volume, lock, quick add */
+const trkEl=$('#trk'); let trkOpen=null;
+const TRACK_ICON={v:'film',t:'text',a:'music'};
+function updTrackHeads(){
+  const tr=TR();
+  for(const b of $('#tlLabels').children){ const k=b.dataset.tr, o=tr[k];
+    const off = k==='a' ? !o.on : !o.on, half = k==='v' && o.on && o.mute;
+    b.innerHTML=icon(TRACK_ICON[k],k==='v'?17:15)+`<i class="st${off?' off':half?' half':''}"></i><span class="lk">${icon('lock',10)}</span>`;
+    b.classList.toggle('locked',!!o.lock); b.classList.toggle('dim',off);
+    const name=t('track'+k.toUpperCase()); b.setAttribute('aria-label',name); b.title=name;
+    const row={v:'#trV',t:'#trT',a:'#trA'}[k]; $(row).classList.toggle('off',off); $(row).classList.toggle('locked',!!o.lock);
+  }
+}
+const trow=(ic,label,k,v,rg)=>`<label class="trk-row"><span class="ri">${icon(ic,17)}</span><span class="rl">${label}</span><input type="checkbox" class="switch${rg?' rg':''}" data-k="${k}"${v?' checked':''}></label>`;
+const tbtn=(ic,label,act)=>`<button class="ctx-i" data-ta="${act}"><span>${label}</span>${icon(ic,18)}</button>`;
+function renderTrk(){
+  const k=trkOpen, o=TR()[k]; let h=`<div class="ctx-h">${t('track'+k.toUpperCase())}</div>`;
+  h+=trow(o.on?'eye':'eyeOff', k==='a'?t('trackOn'):t('showTrack'), `s.tracks.${k}.on`, o.on, true);
+  if(k==='v') h+=trow('volume', t('clipSound'), 's.tracks.v.mute', !o.mute, true).replace(`data-k="s.tracks.v.mute"`,`data-k="s.tracks.v.mute" data-inv="1"`);
+  if(k!=='t') h+=`<div class="trk-sl">${rng(`s.tracks.${k}.vol`,o.vol,0,2,.01,'pct',t('trackVol'))}</div>`;
+  h+=trow('lock', t('lockTrack'), `s.tracks.${k}.lock`, o.lock, false);
+  h+='<hr>';
+  if(k==='v') h+=tbtn('plus',t('addMedia'),'media')+tbtn('swatch',t('addColor'),'color');
+  if(k==='t') h+=tbtn('plus',t('addText'),'text');
+  if(k==='a') h+=tbtn('music',t('addMusicFile'),'music')+tbtn('mic',t('record'),'rec');
+  trkEl.innerHTML=h; trkEl.querySelectorAll('[id]').forEach(e=>e.id='k_'+e.id); trkEl.querySelectorAll('label[for]').forEach(l=>l.htmlFor='k_'+l.htmlFor);
+  trkEl.querySelectorAll('input[type=range]').forEach(paintRange);
+}
+function openTrk(k,btn){
+  closeTools(); trkOpen=k; renderTrk(); trkEl.hidden=false;
+  const r=btn.getBoundingClientRect(), w=trkEl.offsetWidth, h=trkEl.offsetHeight;
+  trkEl.style.left=clamp(r.right+8,8,innerWidth-w-8)+'px'; trkEl.style.top=clamp(r.top+r.height/2-h/2,8,innerHeight-h-8)+'px';
+}
+function closeTrk(){ if(trkOpen===null) return; trkOpen=null; trkEl.hidden=true; trkEl.innerHTML=''; }
+$('#tlLabels').addEventListener('click',e=>{ const b=e.target.closest('[data-tr]'); if(!b||exp) return; if(trkOpen===b.dataset.tr) closeTrk(); else openTrk(b.dataset.tr,b); });
+trkEl.addEventListener('input',e=>{
+  const el=e.target; if(el.dataset.inv){ setProp(el.dataset.k,!el.checked); commit(); }
+  else { onCtlInput(e); if(el.type==='range') return void (dirty=true); }
+  updTrackHeads(); dirty=true;
+  const ri=el.closest('.trk-row'); if(ri&&el.dataset.k.endsWith('.on')) ri.querySelector('.ri').innerHTML=icon(el.checked?'eye':'eyeOff',17);
+});
+trkEl.addEventListener('change',e=>{ if(e.target.type==='range') commit(); });
+trkEl.addEventListener('click',e=>{ const b=e.target.closest('[data-ta]'); if(!b) return; const a=b.dataset.ta; closeTrk();
+  if(a==='media') $('#inMedia').click(); else if(a==='color') ACTIONS.addColor(); else if(a==='text'){ ACTIONS.addText(); openTools('text',sel.id); }
+  else if(a==='music') $('#inAudio').click(); else if(a==='rec') toggleRecord(); });
+document.addEventListener('pointerdown',e=>{ if(trkOpen!==null && !trkEl.contains(e.target) && !e.target.closest('#tlLabels')) closeTrk(); },true);
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeTrk(); });
+tlScroll.addEventListener('scroll',closeTrk,{passive:true});
 
 /* quick tools: long-press opens a contextual toolbar; value tools expand inline */
 const qtEl=$('#qt'); let qt=null;
@@ -1355,7 +1434,7 @@ $('#logo').innerHTML=icon('logo',22);
 $('#hdrExportIc').innerHTML=icon('export',18);
 $('#undoBtn').innerHTML=icon('undo',19); $('#redoBtn').innerHTML=icon('redo',19);
 $('#startBtn').innerHTML=icon('start',18); $('#splitBtn').innerHTML=icon('scissors',19); $('#addBtn').innerHTML=icon('plus',20);
-{ const ls=$('#tlLabels').children; ls[0].innerHTML=icon('film',16); ls[1].innerHTML=icon('text',15); ls[2].innerHTML=icon('music',15); }
+updTrackHeads();
 $('#zoomIn').innerHTML=icon('zoomIn',17); $('#zoomOut').innerHTML=icon('zoomOut',17);
 $('#undoBtn').addEventListener('click',undo); $('#redoBtn').addEventListener('click',redo);
 $('#startBtn').addEventListener('click',()=>{ if(exp) return; pause(); seek(0); scrollToT(); });
