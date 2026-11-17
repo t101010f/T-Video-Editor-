@@ -317,6 +317,40 @@ body{height:100%;overflow:hidden}
 .dock .qt-tools{padding:8px 6px;justify-content:safe center}
 .dock .qt-p{border-top:0;border-bottom:1px solid var(--sep);max-height:30vh;overflow-y:auto;padding:12px}
 .dock .ph{display:none}
+.seg{display:flex;background:var(--fill);border-radius:12px;padding:3px;gap:2px}
+.seg button{flex:1;padding:8px 4px;border-radius:9px;font-weight:600;font-size:13px;color:var(--muted)}
+.seg button.on{background:var(--surface);color:var(--fg);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+.atiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.atile{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px 6px;border-radius:12px;background:var(--fill);overflow:hidden}
+.atile small{font-size:11px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.atile.on{background:var(--grad);color:#fff}.atile.on small{color:rgba(255,255,255,.9)}
+.ag{display:inline-block;font-weight:800;font-size:18px;line-height:1.2;animation:1.6s ease-in-out infinite}
+.ag.rev{animation-direction:reverse}
+.ag-fade{animation-name:agFade}.ag-up{animation-name:agUp}.ag-down{animation-name:agDown}.ag-left{animation-name:agLeft}.ag-right{animation-name:agRight}
+.ag-zoomIn{animation-name:agZin}.ag-zoomOut{animation-name:agZout}.ag-pop{animation-name:agPop}.ag-rotate{animation-name:agRot}.ag-blur{animation-name:agBlur}
+.ag-type,.ag-wipe{animation-name:agWipe}.ag-flicker{animation-name:agFlick}
+.ag-pulse{animation-name:agPulse}.ag-heart{animation-name:agHeart}.ag-shake{animation-name:agShake;animation-duration:.4s}.ag-swing{animation-name:agSwing}
+.ag-float{animation-name:agFloat}.ag-blink{animation-name:agBlink}.ag-rainbow{animation-name:agRain;color:#ff3b30}.ag-glow{animation-name:agGlow}
+@keyframes agFade{0%,15%{opacity:0}60%,100%{opacity:1}}
+@keyframes agUp{0%,10%{opacity:0;transform:translateY(12px)}60%,100%{opacity:1;transform:none}}
+@keyframes agDown{0%,10%{opacity:0;transform:translateY(-12px)}60%,100%{opacity:1;transform:none}}
+@keyframes agLeft{0%,10%{opacity:0;transform:translateX(18px)}60%,100%{opacity:1;transform:none}}
+@keyframes agRight{0%,10%{opacity:0;transform:translateX(-18px)}60%,100%{opacity:1;transform:none}}
+@keyframes agZin{0%,10%{opacity:0;transform:scale(.2)}60%,100%{opacity:1;transform:none}}
+@keyframes agZout{0%,10%{opacity:0;transform:scale(2)}60%,100%{opacity:1;transform:none}}
+@keyframes agPop{0%,10%{transform:scale(0)}45%{transform:scale(1.25)}60%,100%{transform:scale(1)}}
+@keyframes agRot{0%,10%{opacity:0;transform:rotate(-90deg) scale(.5)}60%,100%{opacity:1;transform:none}}
+@keyframes agBlur{0%,10%{opacity:0;filter:blur(6px)}60%,100%{opacity:1;filter:none}}
+@keyframes agWipe{0%,10%{clip-path:inset(0 0 0 100%)}60%,100%{clip-path:inset(0)}}
+@keyframes agFlick{0%,100%{opacity:1}10%,30%,50%{opacity:0}20%,40%{opacity:1}}
+@keyframes agPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+@keyframes agHeart{0%,40%,100%{transform:scale(1)}10%,25%{transform:scale(1.2)}18%{transform:scale(1.05)}}
+@keyframes agShake{0%,100%{transform:translate(0)}25%{transform:translate(-2px,1px)}50%{transform:translate(2px,-1px)}75%{transform:translate(-1px,-1px)}}
+@keyframes agSwing{0%,100%{transform:rotate(-10deg)}50%{transform:rotate(10deg)}}
+@keyframes agFloat{0%,100%{transform:translateY(-3px)}50%{transform:translateY(3px)}}
+@keyframes agBlink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes agRain{0%{filter:hue-rotate(0)}100%{filter:hue-rotate(360deg)}}
+@keyframes agGlow{0%,100%{text-shadow:0 0 2px currentColor}50%{text-shadow:0 0 10px currentColor,0 0 4px currentColor}}
 .stk{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
 .stk-i{font-size:26px;line-height:1;padding:8px 0;border-radius:12px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif}
 .stk-i:active{background:var(--fill-2);transform:scale(.9)}
@@ -461,7 +495,7 @@ const I18N = {
   textSub:'أضف عناوين وتعليقات، واسحبها مباشرة على المعاينة',addText:'إضافة نص',newText:'اكتب نصك هنا',noTexts:'لا توجد نصوص بعد',
   content:'المحتوى',font:'الخط',size:'الحجم',bold:'عريض',style:'النمط',stPlain:'عادي',stShadow:'ظل',stOutline:'إطار',stBox:'صندوق',boxColor:'لون الصندوق',
   position:'الموضع',posX:'أفقي',posY:'رأسي',top:'أعلى',middle:'وسط',bottom:'أسفل',timing:'التوقيت',start:'يبدأ',end:'ينتهي',
-  startHere:'يبدأ من المؤشر',endHere:'ينتهي عند المؤشر',anim:'الحركة',anNone:'بدون',anFade:'ظهور',anPop:'قفزة',anSlide:'صعود',anType:'كتابة',
+  startHere:'يبدأ من المؤشر',endHere:'ينتهي عند المؤشر',anim:'الحركة',anNone:'بدون',anFade:'تلاشي',anPop:'قفزة',anSlide:'صعود',anType:'كتابة',
   audioSub:'موسيقى خلفية وتعليق صوتي مع تحكم بالمستوى',addMusicFile:'إضافة موسيقى',record:'تسجيل صوتي',stopRec:'إيقاف التسجيل',
   noAudio:'لا توجد مقاطع صوتية بعد',fadeIn:'ظهور تدريجي',fadeOut:'اختفاء تدريجي',startAt:'يبدأ عند',setAtHead:'ضعه عند المؤشر',
   filtersSub:'فلاتر جاهزة وتعديل الإضاءة والألوان',adjust:'ضبط الصورة',brightness:'السطوع',contrast:'التباين',saturation:'التشبع',warmth:'الدفء',vignette:'تظليل الأطراف',
@@ -480,7 +514,7 @@ const I18N = {
   saveUnavailable:'الحفظ غير متاح في هذا العرض',declined:'لم يتم الحفظ',tlEmpty:'الخط الزمني فارغ — أضف فيديو أو صوراً',sec:'ث',
   deleted:'تم الحذف',applied:'تم التطبيق على كل المقاطع',recording:'جارٍ التسجيل…',
   lpHint:'المس أي عنصر لأدواته، واضغط مطولاً واسحب لتحريكه',editText:'تعديل النص',editAudio:'تعديل الصوت',
-  transitionShort:'انتقال',pFresh:'منعش',pSunset:'غروب',pGold:'ذهبي',pPink:'وردي',pCyber:'سايبر',pCinema:'سينمائي',pFilm:'فيلم',pDream:'حالم',pFrost:'ثلجي',pRetro:'ريترو',trSpin:'دوران',trCircle:'دائرة',trWipe:'مسح',trGlitch:'تشويش',effects:'مؤثرات',efNone:'بدون',efShake:'اهتزاز',efPulse:'نبض',efGlitch:'تشويش',efVhs:'VHS',efGrain:'حبيبات فيلم',efFlash:'وميض',efLeak:'تسرّب ضوء',efMirror:'مرآة',efHint:'المؤثر يعمل طوال مدة المقطع ويظهر في التصدير.',motionT:'تحريك',moNone:'بدون',moZoomIn:'تقريب',moZoomOut:'إبعاد',moPanL:'انسياب يسار',moPanR:'انسياب يمين',stickers:'ملصقات',italic:'مائل',textColor:'لون النص',format:'تنسيق',weight:'السُمك',skew:'الميل',storage:'التخزين على الجهاز',storageUsed:'المساحة المستخدمة',deleteProject:'حذف المشروع',confirmDelete:'اضغط مجدداً لحذف المشروع وكل ملفاته',projDeleted:'تم حذف المشروع وتنظيف كل ملفاته',frame:'إطار',frNone:'بدون',frColor:'لون',frImage:'إطار خاص',frSize:'السمك',frOpacity:'الشفافية',frRadius:'استدارة الزوايا',frSolid:'صلب',frDouble:'مزدوج',frGlow:'توهج',frPick:'اختيار إطار من جهازك',frReplace:'تغيير صورة الإطار',frImgHint:'استخدم صورة PNG بوسط شفاف، وستُمدّ على كامل الفيديو.',frAdded:'تمت إضافة الإطار',frIn:'داخل الفيديو',frOut:'خارج الفيديو',frInHint:'يُرسم الإطار فوق أطراف الفيديو ويغطي جزءاً منها.',frOutHint:'يُضاف الإطار حول الفيديو ويكبر مقاسه، والفيديو داخله يبقى كاملاً.',frDelete:'حذف الإطار',frDeleted:'تم حذف الإطار',cropT:'اقتصاص',cropResized:'أصبح مقاس الفيديو',ratioCustom:'مقاس مخصص من الاقتصاص',cropSize:'الأبعاد',cropFree:'حر',cropProj:'مقاس المشروع',cropHint:'اسحب الإطار أو زواياه على المعاينة.',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
+  transitionShort:'انتقال',anIn:'دخول',anOut:'خروج',anLoop:'متكرر',anDur:'مدة الحركة',anUp:'صعود',anDown:'نزول',anLeft:'انزلاق يسار',anRight:'انزلاق يمين',anZoomIn:'تكبير',anZoomOut:'تصغير',anRotate:'دوران',anBlur:'ضبابي',anWipe:'مسح',anFlicker:'وميض',lpPulse:'نبض',lpHeart:'نبضة قلب',lpShake:'اهتزاز',lpSwing:'تأرجح',lpFloat:'طفو',lpBlink:'خفوت',lpRainbow:'قوس قزح',lpGlow:'توهج',pFresh:'منعش',pSunset:'غروب',pGold:'ذهبي',pPink:'وردي',pCyber:'سايبر',pCinema:'سينمائي',pFilm:'فيلم',pDream:'حالم',pFrost:'ثلجي',pRetro:'ريترو',trSpin:'دوران',trCircle:'دائرة',trWipe:'مسح',trGlitch:'تشويش',effects:'مؤثرات',efNone:'بدون',efShake:'اهتزاز',efPulse:'نبض',efGlitch:'تشويش',efVhs:'VHS',efGrain:'حبيبات فيلم',efFlash:'وميض',efLeak:'تسرّب ضوء',efMirror:'مرآة',efHint:'المؤثر يعمل طوال مدة المقطع ويظهر في التصدير.',motionT:'تحريك',moNone:'بدون',moZoomIn:'تقريب',moZoomOut:'إبعاد',moPanL:'انسياب يسار',moPanR:'انسياب يمين',stickers:'ملصقات',italic:'مائل',textColor:'لون النص',format:'تنسيق',weight:'السُمك',skew:'الميل',storage:'التخزين على الجهاز',storageUsed:'المساحة المستخدمة',deleteProject:'حذف المشروع',confirmDelete:'اضغط مجدداً لحذف المشروع وكل ملفاته',projDeleted:'تم حذف المشروع وتنظيف كل ملفاته',frame:'إطار',frNone:'بدون',frColor:'لون',frImage:'إطار خاص',frSize:'السمك',frOpacity:'الشفافية',frRadius:'استدارة الزوايا',frSolid:'صلب',frDouble:'مزدوج',frGlow:'توهج',frPick:'اختيار إطار من جهازك',frReplace:'تغيير صورة الإطار',frImgHint:'استخدم صورة PNG بوسط شفاف، وستُمدّ على كامل الفيديو.',frAdded:'تمت إضافة الإطار',frIn:'داخل الفيديو',frOut:'خارج الفيديو',frInHint:'يُرسم الإطار فوق أطراف الفيديو ويغطي جزءاً منها.',frOutHint:'يُضاف الإطار حول الفيديو ويكبر مقاسه، والفيديو داخله يبقى كاملاً.',frDelete:'حذف الإطار',frDeleted:'تم حذف الإطار',cropT:'اقتصاص',cropResized:'أصبح مقاس الفيديو',ratioCustom:'مقاس مخصص من الاقتصاص',cropSize:'الأبعاد',cropFree:'حر',cropProj:'مقاس المشروع',cropHint:'اسحب الإطار أو زواياه على المعاينة.',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
  en:{appName:'Laqta',tagline:'A video editor that runs in your browser',export:'Export',exporting:'Exporting…',timeline:'Timeline',
   footPrivacy:'Everything is processed in your browser. Your files are never uploaded.',footVersion:'Version 0.2',
   media:'Media',edit:'Edit',text:'Text',audio:'Audio',filters:'Filters',canvas:'Canvas',
@@ -517,7 +551,7 @@ const I18N = {
   saveUnavailable:'Saving is not available in this view',declined:'Not saved',tlEmpty:'The timeline is empty. Add videos or photos.',sec:'s',
   deleted:'Deleted',applied:'Applied to all clips',recording:'Recording…',
   lpHint:'Tap an item for its tools. Long-press and drag to move it.',editText:'Edit text',editAudio:'Edit audio',
-  transitionShort:'Transition',pFresh:'Fresh',pSunset:'Sunset',pGold:'Gold',pPink:'Pink',pCyber:'Cyber',pCinema:'Cinema',pFilm:'Film',pDream:'Dream',pFrost:'Frost',pRetro:'Retro',trSpin:'Spin',trCircle:'Circle',trWipe:'Wipe',trGlitch:'Glitch',effects:'Effects',efNone:'None',efShake:'Shake',efPulse:'Pulse',efGlitch:'Glitch',efVhs:'VHS',efGrain:'Film grain',efFlash:'Flash',efLeak:'Light leak',efMirror:'Mirror',efHint:'The effect runs for the whole clip and shows in the export.',motionT:'Motion',moNone:'None',moZoomIn:'Zoom in',moZoomOut:'Zoom out',moPanL:'Pan left',moPanR:'Pan right',stickers:'Stickers',italic:'Italic',textColor:'Text color',format:'Format',weight:'Weight',skew:'Slant',storage:'Storage on this device',storageUsed:'Space used',deleteProject:'Delete project',confirmDelete:'Tap again to delete the project and all its files',projDeleted:'Project deleted and all its files cleaned up',frame:'Frame',frNone:'None',frColor:'Color',frImage:'Custom',frSize:'Thickness',frOpacity:'Transparency',frRadius:'Corner radius',frSolid:'Solid',frDouble:'Double',frGlow:'Glow',frPick:'Choose a frame from your device',frReplace:'Replace frame image',frImgHint:'Use a PNG with a transparent center. It stretches over the whole video.',frAdded:'Frame added',frIn:'Inside video',frOut:'Outside video',frInHint:'The frame is drawn over the video edges and covers part of them.',frOutHint:'The frame is added around the video and enlarges it; the video inside stays whole.',frDelete:'Remove frame',frDeleted:'Frame removed',cropT:'Crop',cropResized:'Video size is now',ratioCustom:'Custom size from crop',cropSize:'Size',cropFree:'Free',cropProj:'Project size',cropHint:'Drag the box or its corners on the preview.',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
+  transitionShort:'Transition',anIn:'In',anOut:'Out',anLoop:'Loop',anDur:'Animation length',anUp:'Rise',anDown:'Drop',anLeft:'Slide left',anRight:'Slide right',anZoomIn:'Zoom in',anZoomOut:'Zoom out',anRotate:'Rotate',anBlur:'Blur',anWipe:'Wipe',anFlicker:'Flicker',lpPulse:'Pulse',lpHeart:'Heartbeat',lpShake:'Shake',lpSwing:'Swing',lpFloat:'Float',lpBlink:'Blink',lpRainbow:'Rainbow',lpGlow:'Glow',pFresh:'Fresh',pSunset:'Sunset',pGold:'Gold',pPink:'Pink',pCyber:'Cyber',pCinema:'Cinema',pFilm:'Film',pDream:'Dream',pFrost:'Frost',pRetro:'Retro',trSpin:'Spin',trCircle:'Circle',trWipe:'Wipe',trGlitch:'Glitch',effects:'Effects',efNone:'None',efShake:'Shake',efPulse:'Pulse',efGlitch:'Glitch',efVhs:'VHS',efGrain:'Film grain',efFlash:'Flash',efLeak:'Light leak',efMirror:'Mirror',efHint:'The effect runs for the whole clip and shows in the export.',motionT:'Motion',moNone:'None',moZoomIn:'Zoom in',moZoomOut:'Zoom out',moPanL:'Pan left',moPanR:'Pan right',stickers:'Stickers',italic:'Italic',textColor:'Text color',format:'Format',weight:'Weight',skew:'Slant',storage:'Storage on this device',storageUsed:'Space used',deleteProject:'Delete project',confirmDelete:'Tap again to delete the project and all its files',projDeleted:'Project deleted and all its files cleaned up',frame:'Frame',frNone:'None',frColor:'Color',frImage:'Custom',frSize:'Thickness',frOpacity:'Transparency',frRadius:'Corner radius',frSolid:'Solid',frDouble:'Double',frGlow:'Glow',frPick:'Choose a frame from your device',frReplace:'Replace frame image',frImgHint:'Use a PNG with a transparent center. It stretches over the whole video.',frAdded:'Frame added',frIn:'Inside video',frOut:'Outside video',frInHint:'The frame is drawn over the video edges and covers part of them.',frOutHint:'The frame is added around the video and enlarges it; the video inside stays whole.',frDelete:'Remove frame',frDeleted:'Frame removed',cropT:'Crop',cropResized:'Video size is now',ratioCustom:'Custom size from crop',cropSize:'Size',cropFree:'Free',cropProj:'Project size',cropHint:'Drag the box or its corners on the preview.',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
 };
 let lang = store.get('laqta.lang') === 'en' ? 'en' : 'ar';
 const t = k => (I18N[lang][k] ?? I18N.ar[k] ?? k);
@@ -617,7 +651,7 @@ let holdSince = 0, textBoxes = [], exp = null, result = null, recState = null;
 
 const newClip = (kind, o={}) => Object.assign({id:uid(), kind, srcId:null, name:'', in:0, out:3, dur:3, speed:1, vol:1, muted:false,
   tf:{rot:0, fh:false, fv:false, zoom:1, fit:'fit'}, fx:{p:'none', bri:0, con:0, sat:0, warm:0, vig:0}, tr:'none', eff:'none', motion:'none', color:'#5AC8FA', color2:'#0A3A9A'}, o);
-const newText = (o={}) => Object.assign({id:uid(), text:t('newText'), start:0, end:3, x:.5, y:.5, size:8, color:'#FFFFFF', font:'plex', bold:true, weight:700, skew:0, tr:0, style:'shadow', bg:'#0A3A9A', anim:'pop'}, o);
+const newText = (o={}) => Object.assign({id:uid(), text:t('newText'), start:0, end:3, x:.5, y:.5, size:8, color:'#FFFFFF', font:'plex', bold:true, weight:700, skew:0, tr:0, style:'shadow', bg:'#0A3A9A', anim:'pop', ain:'pop', aout:'fade', aloop:'none', adur:.5}, o);
 
 function seedSample(){
   S.clips = [newClip('color',{dur:4, color:'#5AC8FA', color2:'#0A3A9A'}), newClip('color',{dur:4, color:'#1E7BF0', color2:'#071733', tr:'fade'})];
@@ -928,32 +962,71 @@ function drawFrame(c2,W,H,pad){
   c2.restore();
 }
 function rr(c2,x,y,w,h,r){ c2.beginPath(); c2.moveTo(x+r,y); c2.arcTo(x+w,y,x+w,y+h,r); c2.arcTo(x+w,y+h,x,y+h,r); c2.arcTo(x,y+h,x,y,r); c2.arcTo(x,y,x+w,y,r); c2.closePath(); }
+/* text animations: entrance, exit and loop (InShot-style) */
+const AIN=[['none','anNone'],['fade','anFade'],['up','anUp'],['down','anDown'],['left','anLeft'],['right','anRight'],['zoomIn','anZoomIn'],['zoomOut','anZoomOut'],['pop','anPop'],['rotate','anRotate'],['blur','anBlur'],['type','anType'],['wipe','anWipe'],['flicker','anFlicker']];
+const AOUT=AIN.filter(a=>a[0]!=='pop'&&a[0]!=='type');
+const ALOOP=[['none','anNone'],['pulse','lpPulse'],['heart','lpHeart'],['shake','lpShake'],['swing','lpSwing'],['float','lpFloat'],['blink','lpBlink'],['rainbow','lpRainbow'],['glow','lpGlow']];
+const OUTMAP={up:'down',down:'up',left:'right',right:'left',zoomIn:'zoomOut',zoomOut:'zoomIn'};
+function getAnim(tx){ if(tx.ain!==undefined||tx.aout!==undefined) return {in:tx.ain||'none',out:tx.aout||'none',loop:tx.aloop||'none',dur:tx.adur||.5};
+  const m={fade:['fade','fade'],pop:['pop','fade'],slide:['up','fade'],type:['type','none']}[tx.anim]||['none','none']; return {in:m[0],out:m[1],loop:tx.aloop||'none',dur:tx.adur||.5}; }
+function animPhase(kind,e,st,W,H,fs){
+  const q=ease(e);
+  switch(kind){
+    case 'fade': st.a*=e; break;
+    case 'up': st.dy+=(1-q)*H*.08; st.a*=q; break;
+    case 'down': st.dy-=(1-q)*H*.08; st.a*=q; break;
+    case 'left': st.dx+=(1-q)*W*.3; st.a*=q; break;
+    case 'right': st.dx-=(1-q)*W*.3; st.a*=q; break;
+    case 'zoomIn': st.sc*=.2+.8*q; st.a*=q; break;
+    case 'zoomOut': st.sc*=2.2-1.2*q; st.a*=q; break;
+    case 'pop': { const c1=1.70158, c3=c1+1, x=e-1, b=e<1?1+c3*x*x*x+c1*x*x:1; st.sc*=Math.max(.01,b); st.a*=clamp(e*4,0,1); } break;
+    case 'rotate': st.rot+=(1-q)*-Math.PI/2; st.sc*=.5+.5*q; st.a*=q; break;
+    case 'blur': st.blur+=(1-q)*fs*.4; st.a*=q; break;
+    case 'wipe': st.wipe=Math.min(st.wipe,q); break;
+    case 'flicker': if(e<1) st.a*=hash(Math.floor(e*16)+st.seed)>.45?Math.max(.3,e):.04; break;
+    case 'type': st.type=Math.min(st.type,e); break;
+  }
+}
+function animLoop(kind,t,st,W,H,fs){
+  switch(kind){
+    case 'pulse': st.sc*=1+.07*Math.sin(t*Math.PI*2*1.2); break;
+    case 'heart': { const k=(t*1.1)%1; st.sc*=1+.13*Math.exp(-k*12)+(k>.2?.07*Math.exp(-(k-.2)*12):0); } break;
+    case 'shake': { const k=Math.floor(t*30); st.dx+=(hash(k)-.5)*fs*.25; st.dy+=(hash(k+3.3)-.5)*fs*.2; } break;
+    case 'swing': st.rot+=Math.sin(t*Math.PI*2*.8)*.12; break;
+    case 'float': st.dy+=Math.sin(t*Math.PI*2*.5)*H*.012; break;
+    case 'blink': st.a*=.3+.7*(.5+.5*Math.cos(t*Math.PI*2*1.5)); break;
+    case 'rainbow': st.hue=(t*140)%360; break;
+    case 'glow': st.glow=.5+.5*Math.sin(t*Math.PI*2); break;
+  }
+}
 function drawTexts(c2,W,H,time,ui){
   textBoxes=[];
   for(const tx of S.texts){
     if(time<tx.start||time>=tx.end) continue;
-    const local=time-tx.start, rem=tx.end-time, A=.45;
-    let alpha=1, dy=0, sc=1, txt=tx.text;
-    const pin=clamp(local/A,0,1), pout=clamp(rem/A,0,1);
-    if(tx.anim==='fade'){ alpha=Math.min(pin,pout); }
-    else if(tx.anim==='pop'){ const p=pin; sc=p<1? .6+.4*(1+2.2*Math.pow(p-1,3)+1.2*Math.pow(p-1,2)) : 1; alpha=Math.min(clamp(local/.15,0,1),pout); }
-    else if(tx.anim==='slide'){ dy=(1-ease(pin))*H*.05; alpha=Math.min(ease(pin),pout); }
-    else if(tx.anim==='type'){ const chars=[...tx.text]; txt=chars.slice(0,Math.floor(local*16)).join(''); alpha=pout; }
+    const local=time-tx.start, rem=tx.end-time, an=getAnim(tx), d=Math.min(an.dur,(tx.end-tx.start)/2);
     const fs=tx.size/100*W, lh=fs*1.3;
+    const st={a:1,dx:0,dy:0,sc:1,rot:0,blur:0,wipe:1,type:1,hue:0,glow:0,seed:tx.id.charCodeAt(0)};
+    if(an.in!=='none'&&local<d) animPhase(an.in,local/d,st,W,H,fs);
+    if(an.out!=='none'&&rem<d) animPhase(OUTMAP[an.out]||an.out,rem/d,st,W,H,fs);
+    if(an.loop!=='none') animLoop(an.loop,local,st,W,H,fs);
+    let txt=tx.text; if(st.type<1){ const ch=[...tx.text]; txt=ch.slice(0,Math.ceil(ch.length*st.type)).join(''); }
     const wt=tx.weight||(tx.bold?700:400), fam=FONTS[tx.font]||FONTS.plex;
-    c2.save(); c2.globalAlpha=clamp(alpha*(1-(tx.tr||0)),0,1); c2.font=`${wt} ${fs}px ${fam}`; ensureFont(`${wt} 40px ${fam}`); c2.textAlign='center'; c2.textBaseline='middle'; c2.direction='inherit';
+    c2.save(); c2.globalAlpha=clamp(st.a*(1-(tx.tr||0)),0,1); c2.font=`${wt} ${fs}px ${fam}`; ensureFont(`${wt} 40px ${fam}`); c2.textAlign='center'; c2.textBaseline='middle'; c2.direction='inherit';
     const all=tx.text.split('\n'), lines=txt.split('\n');
     const widths=all.map(l=>c2.measureText(l||' ').width); const bw=Math.max(...widths), bh=all.length*lh;
-    const cx=tx.x*W, cy=tx.y*H+dy;
-    c2.translate(cx,cy); c2.scale(sc,sc); if(tx.skew) c2.transform(1,0,-Math.tan(tx.skew*Math.PI/180),1,0,0);
+    const cx=tx.x*W, cy=tx.y*H;
+    const filt=[]; if(st.blur>.3) filt.push(`blur(${st.blur.toFixed(1)}px)`); if(st.hue) filt.push(`hue-rotate(${st.hue.toFixed(0)}deg)`); if(filt.length) c2.filter=filt.join(' ');
+    c2.translate(cx+st.dx,cy+st.dy); if(st.rot) c2.rotate(st.rot); c2.scale(st.sc,st.sc); if(tx.skew) c2.transform(1,0,-Math.tan(tx.skew*Math.PI/180),1,0,0);
     const padX=fs*.45, padY=fs*.22;
+    if(st.wipe<1){ const ww=(bw+padX*2)*st.wipe, rtl=/[؀-ۿ]/.test(tx.text); c2.beginPath(); c2.rect(rtl?bw/2+padX-ww:-bw/2-padX,-bh/2-padY-fs,ww,bh+padY*2+fs*2); c2.clip(); }
     if(tx.style==='box'){ c2.fillStyle=tx.bg; rr(c2,-bw/2-padX,-bh/2-padY,bw+padX*2,bh+padY*2,fs*.3); c2.fill(); }
-    if(tx.style==='shadow'){ c2.shadowColor='rgba(0,0,0,.55)'; c2.shadowBlur=fs*.25; c2.shadowOffsetY=fs*.06; }
+    if(st.glow){ c2.shadowColor=tx.color; c2.shadowBlur=fs*(.25+.6*st.glow); }
+    else if(tx.style==='shadow'){ c2.shadowColor='rgba(0,0,0,.55)'; c2.shadowBlur=fs*.25; c2.shadowOffsetY=fs*.06; }
     lines.forEach((l,i)=>{ const y=-bh/2+lh*(i+.5);
       if(tx.style==='outline'){ c2.lineJoin='round'; c2.lineWidth=fs*.14; c2.strokeStyle=isLight(tx.color)?'#000':'#fff'; c2.strokeText(l,0,y); }
       c2.fillStyle=tx.color; c2.fillText(l,0,y); });
     c2.restore();
-    const box={id:tx.id,x:cx-bw/2-padX,y:tx.y*H-bh/2-padY,w:bw+padX*2,h:bh+padY*2};
+    const box={id:tx.id,x:cx-bw/2-padX,y:cy-bh/2-padY,w:bw+padX*2,h:bh+padY*2};
     textBoxes.push(box);
     if(ui && sel && sel.type==='text' && sel.id===tx.id){ c2.save(); c2.setLineDash([8,6]); c2.lineWidth=2; c2.strokeStyle='#64D2FF'; rr(c2,box.x-4,box.y-4,box.w+8,box.h+8,10); c2.stroke(); c2.restore(); }
   }
@@ -1263,7 +1336,10 @@ function qtPanel(type,o,tool){
     case 'color': return `<div class="ctl-h"><span>${t('textColor')}</span></div>`+swatches('t.color',o.color)+(o.style==='box'?`<div class="ctl-h"><span>${t('boxColor')}</span></div>`+swatches('t.bg',o.bg):'');
     case 'adjust': return rng('t.size',o.size,3,30,.1,'n',t('size'))+rng('t.weight',o.weight||(o.bold?700:400),100,900,100,'n',t('weight'))+rng('t.skew',o.skew||0,-30,30,1,'deg',t('skew'))+rng('t.tr',o.tr||0,0,.95,.01,'pct',t('frOpacity'));
     case 'style': return chips('t.style',[['plain',t('stPlain')],['shadow',t('stShadow')],['outline',t('stOutline')],['box',t('stBox')]],o.style)+(o.style==='box'?swatches('t.bg',o.bg):'');
-    case 'anim': return chips('t.anim',[['none',t('anNone')],['fade',t('anFade')],['pop',t('anPop')],['slide',t('anSlide')],['type',t('anType')]],o.anim);
+    case 'anim': { const an=getAnim(o), L=animTab==='in'?AIN:animTab==='out'?AOUT:ALOOP, key=animTab==='in'?'t.ain':animTab==='out'?'t.aout':'t.aloop', cur=an[animTab];
+      return `<div class="seg">${[['in','anIn'],['out','anOut'],['loop','anLoop']].map(([k,l])=>`<button class="${animTab===k?'on':''}" data-atab="${k}">${t(l)}${an[k]!=='none'?' •':''}</button>`).join('')}</div>`
+        +`<div class="atiles">${L.map(([k,l])=>`<button class="atile${cur===k?' on':''}" data-act="set" data-k="${key}" data-v="${k}"><span class="ag ag-${k}${animTab==='out'?' rev':''}">Aa</span><small>${t(l)}</small></button>`).join('')}</div>`
+        +(animTab!=='loop'?rng('t.adur',an.dur,.2,2,.05,'s',t('anDur')):''); }
   }
   if(type==='audio') switch(tool){
     case 'vol': return rng('a.vol',o.vol,0,2,.01,'pct',t('clipVolume'));
@@ -1274,7 +1350,10 @@ function qtPanel(type,o,tool){
   }
   return '';
 }
-let mainTool=null, adjP='bri';
+let mainTool=null, adjP='bri', animTab='in', pvTimer=0;
+function previewAnim(k){ const x=selText(); if(!x||exp) return; const an=getAnim(x); clearTimeout(pvTimer); pause();
+  T=k==='t.aout'?Math.max(x.start,x.end-an.dur-.35):x.start; scrollToT(); updTime(); play();
+  pvTimer=setTimeout(()=>{ if(playing&&!exp) pause(); },(k==='t.aloop'?2.2:an.dur+.6)*1000); }
 const STICKERS=['❤️','😂','😍','🔥','✨','⭐','🎉','👍','👏','😎','🥳','💯','🙏','😢','😮','🤍','💙','🌙','☀️','🌸','🌹','🎵','🎶','📍','✅','❌','⚡','💥','🎂','🎁','☕','🍕','🚗','✈️','📷','🎬','👑','💎','🕋','🇸🇦','➡️','⬅️','⬆️','⬇️','💬','❓','❗','💡'];
 const MAIN=[['canvas','ratio','canvas',1],['frame','frame','frame',1],['sticker','smile','stickers',1],['media','media','mediaS'],['music','music','addMusic'],['rec','mic','recShort'],['text','text','text'],['filter','filters','filters',1],['project','film','project',1],['export','export','export',1]];
 function mainPanel(k){
@@ -1379,6 +1458,7 @@ qtEl.addEventListener('click',e=>{
   if(e.target.closest('[data-qa="close"]')){ closeTools(); return; }
   const tx=e.target.closest('[data-tx]'); if(tx&&qt&&qt.type==='text'){ textAct(tx.dataset.tx); return; }
   const qp=e.target.closest('[data-qp]'); if(qp){ adjP=qp.dataset.qp; renderDock(); return; }
+  const at=e.target.closest('[data-atab]'); if(at){ animTab=at.dataset.atab; renderDock(); return; }
   const tb=e.target.closest('[data-tool]');
   if(tb&&qt){ const k=tb.dataset.tool;
     if(tb.dataset.p==='1'){ qt.tool=qt.tool===k?null:k;
@@ -1634,7 +1714,7 @@ qtEl.addEventListener('input',onCtlInput); qtEl.addEventListener('change',onCtlC
 
 function parseV(v){ if(v==='true') return true; if(v==='false') return false; if(v!==''&&!isNaN(v)&&!/^#/.test(v)) return parseFloat(v); return v; }
 const ACTIONS={
-  set(b){ const k=b.dataset.k, v=parseV(b.dataset.v); setProp(k,v); if(k.startsWith('s.frame.')){ applyRatio(); result=null; } if(k==='s.frame.type'&&v==='image'&&!(FR().img&&SRC[FR().img])) $('#inFrame').click(); if(k==='s.exp.q'||k==='s.exp.fps') result=null; commit(); renderPanel(); renderTimeline(); updTime(); renderQT(); },
+  set(b){ const k=b.dataset.k, v=parseV(b.dataset.v); setProp(k,v); if(/^t\.(ain|aout|aloop)$/.test(k)){ const x=selText(); if(x){ const an=getAnim(x); x.ain=an.in; x.aout=an.out; x.aloop=an.loop; x.adur=an.dur; setProp(k,v); } setTimeout(()=>previewAnim(k),0); } if(k.startsWith('s.frame.')){ applyRatio(); result=null; } if(k==='s.frame.type'&&v==='image'&&!(FR().img&&SRC[FR().img])) $('#inFrame').click(); if(k==='s.exp.q'||k==='s.exp.fps') result=null; commit(); renderPanel(); renderTimeline(); updTime(); renderQT(); },
   addColor(){ const c=newClip('color',{dur:3,color:'#5AC8FA',color2:'#0A3A9A'}); if(S.sample){S.clips=[];S.texts=[];S.sample=false;} S.clips.push(c); sel={type:'clip',id:c.id}; commit(); renderAll(); },
   pickAudio(){ $('#inAudio').click(); },
   clearSample(){ S.clips=[]; S.texts=[]; S.sample=false; sel=null; T=0; commit(); renderAll(); },
