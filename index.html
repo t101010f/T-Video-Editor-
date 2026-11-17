@@ -205,12 +205,13 @@ input[type=color]::-webkit-color-swatch{border:0;border-radius:50%;box-shadow:in
 .tl-empty{position:absolute;inset:18px 0 0;display:grid;place-items:center;color:var(--muted);font-size:13px;pointer-events:none}
 .tl-head .hint{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .blk{-webkit-touch-callout:none}
-.hdl{position:absolute;top:0;bottom:0;width:16px;background:#fff;display:grid;place-items:center;touch-action:none;cursor:ew-resize;z-index:3;font-style:normal}
+.tl{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.hdl{position:absolute;top:0;bottom:0;width:22px;background:#fff;display:grid;place-items:center;touch-action:none;cursor:ew-resize;z-index:3;font-style:normal}
 .hdl::after{content:"";width:3px;height:42%;border-radius:2px;background:var(--blue-2)}
 .hdl.l{left:0}.hdl.r{right:0}
 .txb.sel,.aub.sel{box-shadow:inset 0 0 0 2px #fff,0 0 0 2px var(--accent)}
 .txb.sel span,.aub.sel span{padding-inline:12px}
-.blk.lifted{transform:scale(1.04);box-shadow:0 10px 24px rgba(0,0,0,.35);z-index:6;transition:transform .15s}
+.blk.lifted{transform:scale(1.06) translateY(-3px);box-shadow:0 10px 24px rgba(0,0,0,.35);z-index:6;transition:transform .15s}
 .blk.moving{opacity:.92;z-index:6;box-shadow:0 10px 24px rgba(0,0,0,.35);transition:none}
 .add-end{position:absolute;top:6px;bottom:6px;width:52px;border-radius:12px;background:var(--fill);display:grid;place-items:center;color:var(--accent)}
 .add-end:hover{background:var(--fill-2)}
@@ -420,7 +421,7 @@ const I18N = {
   themeLight:'الوضع الفاتح',themeDark:'الوضع الداكن',sampleTitleText:'لقطة',sampleSubText:'أضف مقاطعك وابدأ المونتاج',
   saveUnavailable:'الحفظ غير متاح في هذا العرض',declined:'لم يتم الحفظ',tlEmpty:'الخط الزمني فارغ — أضف فيديو أو صوراً',sec:'ث',
   deleted:'تم الحذف',applied:'تم التطبيق على كل المقاطع',recording:'جارٍ التسجيل…',
-  lpHint:'اضغط مطولاً على أي عنصر لأدوات التعديل السريعة',editText:'تعديل النص',editAudio:'تعديل الصوت',
+  lpHint:'المس أي عنصر لأدواته، واضغط مطولاً واسحب لتحريكه',editText:'تعديل النص',editAudio:'تعديل الصوت',
   transitionShort:'انتقال',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
  en:{appName:'Laqta',tagline:'A video editor that runs in your browser',export:'Export',exporting:'Exporting…',timeline:'Timeline',
   footPrivacy:'Everything is processed in your browser. Your files are never uploaded.',footVersion:'Version 0.1',
@@ -457,7 +458,7 @@ const I18N = {
   themeLight:'Light mode',themeDark:'Dark mode',sampleTitleText:'Laqta',sampleSubText:'Add your clips and start editing',
   saveUnavailable:'Saving is not available in this view',declined:'Not saved',tlEmpty:'The timeline is empty. Add videos or photos.',sec:'s',
   deleted:'Deleted',applied:'Applied to all clips',recording:'Recording…',
-  lpHint:'Long-press any item for quick editing tools',editText:'Edit text',editAudio:'Edit audio',
+  lpHint:'Tap an item for its tools. Long-press and drag to move it.',editText:'Edit text',editAudio:'Edit audio',
   transitionShort:'Transition',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
 };
 let lang = store.get('laqta.lang') === 'en' ? 'en' : 'ar';
@@ -783,34 +784,52 @@ tlScroll.addEventListener('scroll',()=>{
 tlScroll.addEventListener('wheel',e=>{ if(e.ctrlKey||e.metaKey){ e.preventDefault(); zoomTl(e.deltaY<0?1.15:1/1.15); } else if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){ e.preventDefault(); tlScroll.scrollLeft+=e.deltaY; } },{passive:false});
 function zoomTl(k){ pps=clamp(pps*k,8,400); renderTimeline(); }
 
-/* timeline gestures: tap = select · long-press = menu, then drag = move · handles = trim */
+/* timeline gestures: tap = select + tools · long-press then drag = move · handles = trim */
 let g=null;
 const blkObj = b => b.dataset.clip ? {type:'clip',obj:S.clips.find(x=>x.id===b.dataset.clip)} : b.dataset.text ? {type:'text',obj:S.texts.find(x=>x.id===b.dataset.text)} : {type:'audio',obj:S.audios.find(x=>x.id===b.dataset.audio)};
 function markSel(type,id){ sel={type,id}; tlInner.querySelectorAll('.blk.sel').forEach(x=>x.classList.remove('sel')); const el=tlInner.querySelector(`[data-${type}="${id}"]`); if(el) el.classList.add('sel'); dirty=true; }
-tlInner.addEventListener('pointerdown',e=>{
-  if(exp||e.button>0) return;
-  const b=e.target.closest('.blk'); if(!b) return;
-  const {type,obj}=blkObj(b); if(!obj) return;
+function gStart(target,x,y,isTouch,pid){
+  if(exp) return false;
+  const b=target.closest('.blk'); if(!b) return false;
+  const {type,obj}=blkObj(b); if(!obj) return false;
   const L=layout();
-  g={type,obj,el:b,x0:e.clientX,y0:e.clientY,pid:e.pointerId,mouse:e.pointerType==='mouse',mode:null,orig:JSON.parse(JSON.stringify(obj)),
+  g={type,obj,el:b,x0:x,y0:y,pid,touch:isTouch,mode:null,orig:JSON.parse(JSON.stringify(obj)),
      L,lo:type==='clip'?L.find(o=>o.c===obj):null,left0:parseFloat(b.style.left),w0:parseFloat(b.style.width),lp:0,dx:0};
-  const h=e.target.closest('.hdl');
-  if(h){ g.mode=h.dataset.h==='l'?'trimL':'trimR'; if(playing) pause(); try{ h.setPointerCapture(e.pointerId); }catch(_){} e.preventDefault(); return; }
-  if(!g.mouse) g.lp=setTimeout(()=>{ if(!g||g.mode) return; g.mode='armed'; if(playing) pause();
-    try{ navigator.vibrate&&navigator.vibrate(12); }catch(_){}
-    markSel(type,obj.id); b.classList.add('lifted'); openTools(type,obj.id,{el:b}); },420);
-});
-tlInner.addEventListener('pointermove',e=>{
-  if(!g||e.pointerId!==g.pid) return;
-  const dx=e.clientX-g.x0, dist=Math.hypot(dx,e.clientY-g.y0);
+  const h=target.closest('.hdl');
+  if(h){ g.mode=h.dataset.h==='l'?'trimL':'trimR'; if(playing) pause(); return true; }
+  if(isTouch) g.lp=setTimeout(()=>{ if(!g||g.mode) return; g.mode='armed'; if(playing) pause();
+    try{ navigator.vibrate&&navigator.vibrate(15); }catch(_){}
+    markSel(type,obj.id); b.classList.add('lifted'); },380);
+  return true;
+}
+function gMoveTo(x,y){
+  if(!g) return; const dx=x-g.x0, dist=Math.hypot(dx,y-g.y0);
   if(!g.mode){
-    if(dist<6) return;
-    if(g.mouse){ g.mode='move'; if(playing) pause(); markSel(g.type,g.obj.id); try{ g.el.setPointerCapture(g.pid); }catch(_){} }
+    if(dist<8) return;
+    if(!g.touch){ g.mode='move'; if(playing) pause(); markSel(g.type,g.obj.id); }
     else { clearTimeout(g.lp); g=null; return; }
   }
-  if(g.mode==='armed'){ if(dist<8) return; closeTools(); g.el.classList.remove('lifted'); g.mode='move'; }
+  if(g.mode==='armed'){ if(dist<5) return; g.el.classList.remove('lifted'); g.mode='move'; closeTools(); }
   if(g.mode==='move') gMove(dx); else gTrim(dx);
-});
+}
+/* mouse & pen */
+tlInner.addEventListener('pointerdown',e=>{ if(e.pointerType==='touch'||e.button>0) return;
+  if(gStart(e.target,e.clientX,e.clientY,false,e.pointerId)){ try{ (e.target.closest('.hdl')||e.target.closest('.blk')).setPointerCapture(e.pointerId); }catch(_){} e.preventDefault(); } });
+tlInner.addEventListener('pointermove',e=>{ if(e.pointerType==='touch'||!g||g.touch) return; gMoveTo(e.clientX,e.clientY); });
+tlInner.addEventListener('pointerup',e=>{ if(e.pointerType==='touch'||!g||g.touch) return; gEnd(false); });
+tlInner.addEventListener('pointercancel',e=>{ if(e.pointerType==='touch'||!g||g.touch) return; gEnd(true); });
+/* touch: handled with touch events so mobile browsers cannot cancel the long-press */
+const findTouch=(list,id)=>{ for(const tc of list) if(tc.identifier===id) return tc; return null; };
+tlInner.addEventListener('touchstart',e=>{
+  if(e.touches.length>1){ if(g){ clearTimeout(g.lp); g.el.classList.remove('lifted'); g=null; } return; }
+  const tc=e.changedTouches[0]; if(gStart(e.target,tc.clientX,tc.clientY,true,tc.identifier) && g.mode && e.cancelable) e.preventDefault();
+},{passive:false});
+tlInner.addEventListener('touchmove',e=>{
+  if(!g||!g.touch) return; const tc=findTouch(e.changedTouches,g.pid); if(!tc) return;
+  gMoveTo(tc.clientX,tc.clientY); if(g&&g.mode&&e.cancelable) e.preventDefault();
+},{passive:false});
+tlInner.addEventListener('touchend',e=>{ if(!g||!g.touch||!findTouch(e.changedTouches,g.pid)) return; if(e.cancelable) e.preventDefault(); gEnd(false); },{passive:false});
+tlInner.addEventListener('touchcancel',e=>{ if(!g||!g.touch) return; gEnd(true); });
 function gMove(dx){
   const o=g.obj, r=g.orig, dt=dx/pps; g.dx=dx; g.el.classList.add('moving');
   if(g.type==='clip'){ g.el.style.transform=`translateX(${dx}px)`; return; }
@@ -846,20 +865,11 @@ function finishClipMove(d){
 function gEnd(cancel){
   if(!g) return; clearTimeout(g.lp); const d=g; g=null;
   d.el.classList.remove('lifted','moving');
-  if(!d.mode){ if(cancel) return; const now=performance.now();
-    if(lastTap.id===d.obj.id && now-lastTap.t<380){ lastTap={}; openTools(d.type,d.obj.id); } else { lastTap={id:d.obj.id,t:now}; select(d.type,d.obj.id); } return; }
-  if(d.mode==='armed'){ renderTimeline(); renderPanel(); return; }
+  if(!d.mode || d.mode==='armed'){ if(cancel) return; sel={type:d.type,id:d.obj.id}; renderTimeline(); renderPanel(); dirty=true; openTools(d.type,d.obj.id); return; }
   if(d.mode==='move' && d.type==='clip') finishClipMove(d);
-  sel={type:d.type,id:d.obj.id}; commit(); renderTimeline(); renderPanel(); updTime(); dirty=true;
+  sel={type:d.type,id:d.obj.id}; commit(); renderTimeline(); renderPanel(); updTime(); dirty=true; openTools(d.type,d.obj.id);
 }
-tlInner.addEventListener('pointerup',()=>gEnd(false));
-tlInner.addEventListener('pointercancel',()=>gEnd(true));
-tlScroll.addEventListener('touchmove',e=>{ if(g&&g.mode) e.preventDefault(); },{passive:false});
-tlInner.addEventListener('contextmenu',e=>{
-  const b=e.target.closest('.blk'); if(!b||exp) return; e.preventDefault(); if(g) return;
-  const {type,obj}=blkObj(b); if(!obj) return; if(playing) pause(); sel={type,id:obj.id}; renderTimeline(); renderPanel(); openTools(type,obj.id,{x:e.clientX,y:e.clientY});
-});
-let lastTap={};
+tlInner.addEventListener('contextmenu',e=>{ if(e.target.closest('.blk')) e.preventDefault(); });
 tlInner.addEventListener('click',e=>{ if(e.target.closest('.add-end')&&!exp) $('#inMedia').click(); });
 
 /* quick tools: long-press opens a contextual toolbar; value tools expand inline */
@@ -982,7 +992,7 @@ cv.addEventListener('pointerdown',e=>{
 });
 cv.addEventListener('pointermove',e=>{ if(!cDrag||cDrag.tap) return; if(!cDrag.moved && Math.hypot(e.clientX-cDrag.cx,e.clientY-cDrag.cy)<6) return; clearTimeout(cDrag.lp); const p=toCanvas(e); cDrag.moved=true;
   cDrag.tx.x=clamp((p.x-cDrag.dx)/cv.width,.02,.98); cDrag.tx.y=clamp((p.y-cDrag.dy)/cv.height,.02,.98); dirty=true; });
-cv.addEventListener('pointerup',()=>{ if(!cDrag) return; const d=cDrag; cDrag=null; clearTimeout(d.lp); if(d.tap){ togglePlay(); return; } if(d.moved){ commit(); if(tab==='text') renderPanel(); } });
+cv.addEventListener('pointerup',()=>{ if(!cDrag) return; const d=cDrag; cDrag=null; clearTimeout(d.lp); if(d.tap){ togglePlay(); return; } if(d.moved){ commit(); if(tab==='text') renderPanel(); } else openTools('text',d.tx.id,{x:d.cx,y:d.cy}); });
 
 /* ---------- media import ---------- */
 const mediaBox=$('#mediaBox');
