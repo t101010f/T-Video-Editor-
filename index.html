@@ -317,6 +317,9 @@ body{height:100%;overflow:hidden}
 .dock .qt-tools{padding:8px 6px;justify-content:safe center}
 .dock .qt-p{border-top:0;border-bottom:1px solid var(--sep);max-height:30vh;overflow-y:auto;padding:12px}
 .dock .ph{display:none}
+.stk{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));gap:4px}
+.stk-i{font-size:26px;line-height:1;padding:8px 0;border-radius:12px;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif}
+.stk-i:active{background:var(--fill-2);transform:scale(.9)}
 .glyph{font-size:19px;line-height:1}
 .gbox{padding:2px 6px;border-radius:6px;background:var(--fg);color:var(--surface);font-weight:800;font-size:16px}
 .qt-t.on .gbox{background:#fff;color:var(--blue-2)}
@@ -477,7 +480,7 @@ const I18N = {
   saveUnavailable:'الحفظ غير متاح في هذا العرض',declined:'لم يتم الحفظ',tlEmpty:'الخط الزمني فارغ — أضف فيديو أو صوراً',sec:'ث',
   deleted:'تم الحذف',applied:'تم التطبيق على كل المقاطع',recording:'جارٍ التسجيل…',
   lpHint:'المس أي عنصر لأدواته، واضغط مطولاً واسحب لتحريكه',editText:'تعديل النص',editAudio:'تعديل الصوت',
-  transitionShort:'انتقال',italic:'مائل',textColor:'لون النص',format:'تنسيق',weight:'السُمك',skew:'الميل',storage:'التخزين على الجهاز',storageUsed:'المساحة المستخدمة',deleteProject:'حذف المشروع',confirmDelete:'اضغط مجدداً لحذف المشروع وكل ملفاته',projDeleted:'تم حذف المشروع وتنظيف كل ملفاته',frame:'إطار',frNone:'بدون',frColor:'لون',frImage:'إطار خاص',frSize:'السمك',frOpacity:'الشفافية',frRadius:'استدارة الزوايا',frSolid:'صلب',frDouble:'مزدوج',frGlow:'توهج',frPick:'اختيار إطار من جهازك',frReplace:'تغيير صورة الإطار',frImgHint:'استخدم صورة PNG بوسط شفاف، وستُمدّ على كامل الفيديو.',frAdded:'تمت إضافة الإطار',frIn:'داخل الفيديو',frOut:'خارج الفيديو',frInHint:'يُرسم الإطار فوق أطراف الفيديو ويغطي جزءاً منها.',frOutHint:'يُضاف الإطار حول الفيديو ويكبر مقاسه، والفيديو داخله يبقى كاملاً.',frDelete:'حذف الإطار',frDeleted:'تم حذف الإطار',cropT:'اقتصاص',cropResized:'أصبح مقاس الفيديو',ratioCustom:'مقاس مخصص من الاقتصاص',cropSize:'الأبعاد',cropFree:'حر',cropProj:'مقاس المشروع',cropHint:'اسحب الإطار أو زواياه على المعاينة.',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
+  transitionShort:'انتقال',pFresh:'منعش',pSunset:'غروب',pGold:'ذهبي',pPink:'وردي',pCyber:'سايبر',pCinema:'سينمائي',pFilm:'فيلم',pDream:'حالم',pFrost:'ثلجي',pRetro:'ريترو',trSpin:'دوران',trCircle:'دائرة',trWipe:'مسح',trGlitch:'تشويش',effects:'مؤثرات',efNone:'بدون',efShake:'اهتزاز',efPulse:'نبض',efGlitch:'تشويش',efVhs:'VHS',efGrain:'حبيبات فيلم',efFlash:'وميض',efLeak:'تسرّب ضوء',efMirror:'مرآة',efHint:'المؤثر يعمل طوال مدة المقطع ويظهر في التصدير.',motionT:'تحريك',moNone:'بدون',moZoomIn:'تقريب',moZoomOut:'إبعاد',moPanL:'انسياب يسار',moPanR:'انسياب يمين',stickers:'ملصقات',italic:'مائل',textColor:'لون النص',format:'تنسيق',weight:'السُمك',skew:'الميل',storage:'التخزين على الجهاز',storageUsed:'المساحة المستخدمة',deleteProject:'حذف المشروع',confirmDelete:'اضغط مجدداً لحذف المشروع وكل ملفاته',projDeleted:'تم حذف المشروع وتنظيف كل ملفاته',frame:'إطار',frNone:'بدون',frColor:'لون',frImage:'إطار خاص',frSize:'السمك',frOpacity:'الشفافية',frRadius:'استدارة الزوايا',frSolid:'صلب',frDouble:'مزدوج',frGlow:'توهج',frPick:'اختيار إطار من جهازك',frReplace:'تغيير صورة الإطار',frImgHint:'استخدم صورة PNG بوسط شفاف، وستُمدّ على كامل الفيديو.',frAdded:'تمت إضافة الإطار',frIn:'داخل الفيديو',frOut:'خارج الفيديو',frInHint:'يُرسم الإطار فوق أطراف الفيديو ويغطي جزءاً منها.',frOutHint:'يُضاف الإطار حول الفيديو ويكبر مقاسه، والفيديو داخله يبقى كاملاً.',frDelete:'حذف الإطار',frDeleted:'تم حذف الإطار',cropT:'اقتصاص',cropResized:'أصبح مقاس الفيديو',ratioCustom:'مقاس مخصص من الاقتصاص',cropSize:'الأبعاد',cropFree:'حر',cropProj:'مقاس المشروع',cropHint:'اسحب الإطار أو زواياه على المعاينة.',done:'تم',mediaS:'وسائط',recShort:'تسجيل',focusMode:'تكبير المعاينة',savedAuto:'محفوظ',saving:'جارٍ الحفظ…',saveErr:'تعذّر الحفظ التلقائي',quotaErr:'مساحة التخزين ممتلئة، لم تُحفظ بعض الملفات',restored:'تمت استعادة مشروعك',missingFiles:'ملفات مفقودة',project:'المشروع',newProject:'مشروع جديد',confirmNew:'اضغط مجدداً لمسح المشروع الحالي',newDone:'بدأت مشروعاً جديداً',autosaveNote:'يُحفظ مشروعك وملفاته تلقائياً على هذا الجهاز، ويعود كما تركته عند فتح البرنامج.',trackV:'مسار الفيديو',trackT:'مسار النصوص',trackA:'مسار الصوت',showTrack:'إظهار المسار',trackOn:'تشغيل المسار',clipSound:'صوت المقاطع',trackVol:'مستوى صوت المسار',lockTrack:'قفل المسار',trackLocked:'المسار مقفل، افتح القفل من أيقونة المسار',audioFx:'المؤثرات',eq:'المعادل',bassL:'الجهير',midL:'المتوسط',trebleL:'الحدّة',keepPitch:'الحفاظ على طبقة الصوت',toHead:'للمؤشر',fxNone:'بدون',fxBass:'جهير قوي',fxBright:'صافي',fxVoice:'وضوح الصوت',fxPhone:'هاتف',fxMuffled:'مكتوم',fxEcho:'صدى',fxHall:'قاعة',fxRadio:'راديو',adjustShort:'ضبط',flip:'قلب',fades:'تدرّج',close:'إغلاق',typeText:'الكتابة',colorShort:'اللون'},
  en:{appName:'Laqta',tagline:'A video editor that runs in your browser',export:'Export',exporting:'Exporting…',timeline:'Timeline',
   footPrivacy:'Everything is processed in your browser. Your files are never uploaded.',footVersion:'Version 0.2',
   media:'Media',edit:'Edit',text:'Text',audio:'Audio',filters:'Filters',canvas:'Canvas',
@@ -514,7 +517,7 @@ const I18N = {
   saveUnavailable:'Saving is not available in this view',declined:'Not saved',tlEmpty:'The timeline is empty. Add videos or photos.',sec:'s',
   deleted:'Deleted',applied:'Applied to all clips',recording:'Recording…',
   lpHint:'Tap an item for its tools. Long-press and drag to move it.',editText:'Edit text',editAudio:'Edit audio',
-  transitionShort:'Transition',italic:'Italic',textColor:'Text color',format:'Format',weight:'Weight',skew:'Slant',storage:'Storage on this device',storageUsed:'Space used',deleteProject:'Delete project',confirmDelete:'Tap again to delete the project and all its files',projDeleted:'Project deleted and all its files cleaned up',frame:'Frame',frNone:'None',frColor:'Color',frImage:'Custom',frSize:'Thickness',frOpacity:'Transparency',frRadius:'Corner radius',frSolid:'Solid',frDouble:'Double',frGlow:'Glow',frPick:'Choose a frame from your device',frReplace:'Replace frame image',frImgHint:'Use a PNG with a transparent center. It stretches over the whole video.',frAdded:'Frame added',frIn:'Inside video',frOut:'Outside video',frInHint:'The frame is drawn over the video edges and covers part of them.',frOutHint:'The frame is added around the video and enlarges it; the video inside stays whole.',frDelete:'Remove frame',frDeleted:'Frame removed',cropT:'Crop',cropResized:'Video size is now',ratioCustom:'Custom size from crop',cropSize:'Size',cropFree:'Free',cropProj:'Project size',cropHint:'Drag the box or its corners on the preview.',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
+  transitionShort:'Transition',pFresh:'Fresh',pSunset:'Sunset',pGold:'Gold',pPink:'Pink',pCyber:'Cyber',pCinema:'Cinema',pFilm:'Film',pDream:'Dream',pFrost:'Frost',pRetro:'Retro',trSpin:'Spin',trCircle:'Circle',trWipe:'Wipe',trGlitch:'Glitch',effects:'Effects',efNone:'None',efShake:'Shake',efPulse:'Pulse',efGlitch:'Glitch',efVhs:'VHS',efGrain:'Film grain',efFlash:'Flash',efLeak:'Light leak',efMirror:'Mirror',efHint:'The effect runs for the whole clip and shows in the export.',motionT:'Motion',moNone:'None',moZoomIn:'Zoom in',moZoomOut:'Zoom out',moPanL:'Pan left',moPanR:'Pan right',stickers:'Stickers',italic:'Italic',textColor:'Text color',format:'Format',weight:'Weight',skew:'Slant',storage:'Storage on this device',storageUsed:'Space used',deleteProject:'Delete project',confirmDelete:'Tap again to delete the project and all its files',projDeleted:'Project deleted and all its files cleaned up',frame:'Frame',frNone:'None',frColor:'Color',frImage:'Custom',frSize:'Thickness',frOpacity:'Transparency',frRadius:'Corner radius',frSolid:'Solid',frDouble:'Double',frGlow:'Glow',frPick:'Choose a frame from your device',frReplace:'Replace frame image',frImgHint:'Use a PNG with a transparent center. It stretches over the whole video.',frAdded:'Frame added',frIn:'Inside video',frOut:'Outside video',frInHint:'The frame is drawn over the video edges and covers part of them.',frOutHint:'The frame is added around the video and enlarges it; the video inside stays whole.',frDelete:'Remove frame',frDeleted:'Frame removed',cropT:'Crop',cropResized:'Video size is now',ratioCustom:'Custom size from crop',cropSize:'Size',cropFree:'Free',cropProj:'Project size',cropHint:'Drag the box or its corners on the preview.',done:'Done',mediaS:'Media',recShort:'Record',focusMode:'Focus preview',savedAuto:'Saved',saving:'Saving…',saveErr:'Autosave failed',quotaErr:'Storage is full. Some files were not saved.',restored:'Your project was restored',missingFiles:'missing files',project:'Project',newProject:'New project',confirmNew:'Tap again to clear this project',newDone:'Started a new project',autosaveNote:'Your project and its files save automatically on this device and reopen where you left off.',trackV:'Video track',trackT:'Text track',trackA:'Audio track',showTrack:'Show track',trackOn:'Track on',clipSound:'Clip sound',trackVol:'Track volume',lockTrack:'Lock track',trackLocked:'This track is locked. Unlock it from the track icon.',audioFx:'Effects',eq:'Equalizer',bassL:'Bass',midL:'Mids',trebleL:'Treble',keepPitch:'Keep pitch',toHead:'To playhead',fxNone:'None',fxBass:'Bass boost',fxBright:'Bright',fxVoice:'Voice clarity',fxPhone:'Phone',fxMuffled:'Muffled',fxEcho:'Echo',fxHall:'Hall',fxRadio:'Radio',adjustShort:'Adjust',flip:'Flip',fades:'Fades',close:'Close',typeText:'Text',colorShort:'Color'}
 };
 let lang = store.get('laqta.lang') === 'en' ? 'en' : 'ar';
 const t = k => (I18N[lang][k] ?? I18N.ar[k] ?? k);
@@ -560,6 +563,7 @@ const IC = {
  crop:'<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/>',
  ratio:'<rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M7 9v2M7 9h2M17 15v-2M17 15h-2"/>',
  frame:'<rect x="3" y="3" width="18" height="18" rx="2.5"/><rect x="7" y="7" width="10" height="10" rx="1.5"/>',
+ smile:'<circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0"/><path d="M9 9.5h.01M15 9.5h.01"/>',
  expand:'<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>',
  shrink:'<path d="M9 4v5H4M15 4v5h5M9 20v-5H4M15 20v-5h5"/>',
  eye:'<path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
@@ -597,9 +601,11 @@ for(const [,f,ax] of FONT_LIST){ if(f==='IBM Plex Sans Arabic'||f==='Lalezar'||f
   const l=document.createElement('link'); l.rel='stylesheet'; l.href=`https://fonts.googleapis.com/css2?family=${f.replace(/ /g,'+')}${ax?':'+ax:''}&display=swap`; document.head.appendChild(l); }
 const fontReq=new Set();
 function ensureFont(spec){ if(!document.fonts||fontReq.has(spec)) return; fontReq.add(spec); document.fonts.load(spec,'لقطة Aa').then(()=>{ dirty=true; }).catch(()=>{}); }
-const PRESETS = {none:{}, vivid:{c:1.12,s:1.45}, warm:{sep:.28,s:1.2,b:1.03}, cool:{h:-14,s:1.05,b:1.02,c:1.05}, mono:{g:1}, noir:{g:1,c:1.45,b:.92}, vintage:{sep:.5,c:.9,b:1.06,s:.85}, fade:{c:.82,b:1.1,s:.75}, drama:{c:1.35,s:1.15,b:.93}};
-const PRESET_LABEL = {none:'pNone',vivid:'pVivid',warm:'pWarm',cool:'pCool',mono:'pMono',noir:'pNoir',vintage:'pVintage',fade:'pFade',drama:'pDrama'};
-const TRS = [['none','trNone'],['fade','trFade'],['white','trWhite'],['zoom','trZoom'],['slide','trSlide'],['blur','trBlur']];
+const PRESETS = {none:{}, vivid:{c:1.12,s:1.45}, warm:{sep:.28,s:1.2,b:1.03}, cool:{h:-14,s:1.05,b:1.02,c:1.05}, fresh:{b:1.06,s:1.28,h:8}, sunset:{sep:.35,h:-15,s:1.35,c:1.05}, gold:{sep:.45,s:1.45,b:1.04}, pink:{h:-28,s:1.2,b:1.05}, cyber:{h:40,s:1.55,c:1.15}, cinema:{c:1.22,s:.9,h:-8,b:.95}, film:{c:1.1,s:.85,sep:.15,b:.98}, dream:{b:1.12,c:.85,s:1.2}, frost:{h:12,s:.7,b:1.08}, retro:{sep:.6,s:1.1,c:1.1}, mono:{g:1}, noir:{g:1,c:1.45,b:.92}, vintage:{sep:.5,c:.9,b:1.06,s:.85}, fade:{c:.82,b:1.1,s:.75}, drama:{c:1.35,s:1.15,b:.93}};
+const PRESET_LABEL = {none:'pNone',vivid:'pVivid',warm:'pWarm',cool:'pCool',fresh:'pFresh',sunset:'pSunset',gold:'pGold',pink:'pPink',cyber:'pCyber',cinema:'pCinema',film:'pFilm',dream:'pDream',frost:'pFrost',retro:'pRetro',mono:'pMono',noir:'pNoir',vintage:'pVintage',fade:'pFade',drama:'pDrama'};
+const TRS = [['none','trNone'],['fade','trFade'],['white','trWhite'],['zoom','trZoom'],['slide','trSlide'],['blur','trBlur'],['spin','trSpin'],['circle','trCircle'],['wipe','trWipe'],['glitch','trGlitch']];
+const EFFECTS=[['none','efNone'],['shake','efShake'],['pulse','efPulse'],['glitch','efGlitch'],['vhs','efVhs'],['grain','efGrain'],['flash','efFlash'],['leak','efLeak'],['mirror','efMirror']];
+const MOTIONS=[['none','moNone'],['zoomIn','moZoomIn'],['zoomOut','moZoomOut'],['panL','moPanL'],['panR','moPanR']];
 const TD = 0.6;
 
 const TRACKS0={v:{on:true,mute:false,lock:false,vol:1},t:{on:true,lock:false},a:{on:true,lock:false,vol:1}};
@@ -610,7 +616,7 @@ let sel = null, tab = 'media', T = 0, playing = false, playStartT = 0, playStart
 let holdSince = 0, textBoxes = [], exp = null, result = null, recState = null;
 
 const newClip = (kind, o={}) => Object.assign({id:uid(), kind, srcId:null, name:'', in:0, out:3, dur:3, speed:1, vol:1, muted:false,
-  tf:{rot:0, fh:false, fv:false, zoom:1, fit:'fit'}, fx:{p:'none', bri:0, con:0, sat:0, warm:0, vig:0}, tr:'none', color:'#5AC8FA', color2:'#0A3A9A'}, o);
+  tf:{rot:0, fh:false, fv:false, zoom:1, fit:'fit'}, fx:{p:'none', bri:0, con:0, sat:0, warm:0, vig:0}, tr:'none', eff:'none', motion:'none', color:'#5AC8FA', color2:'#0A3A9A'}, o);
 const newText = (o={}) => Object.assign({id:uid(), text:t('newText'), start:0, end:3, x:.5, y:.5, size:8, color:'#FFFFFF', font:'plex', bold:true, weight:700, skew:0, tr:0, style:'shadow', bg:'#0A3A9A', anim:'pop'}, o);
 
 function seedSample(){
@@ -748,9 +754,9 @@ function drawBg(c2,W,H,c){
 
 function drawMedia(c2,W,H,c,local,o){
   c2.save(); c2.filter=filterStr(c.fx,o.blur);
-  if(c.kind==='color'){ c2.translate(o.offX,0); drawColorClip(c2,W,H,c,local); c2.restore(); return; }
+  if(c.kind==='color'){ c2.translate(W/2+o.offX,H/2+(o.offY||0)); c2.rotate(o.rot||0); c2.scale(o.scale,o.scale); c2.translate(-W/2,-H/2); drawColorClip(c2,W,H,c,local); c2.restore(); return; }
   const d=drawable(c); if(!d){ c2.restore(); return; }
-  c2.translate(W/2+o.offX,H/2); c2.rotate(c.tf.rot*Math.PI/180); c2.scale(c.tf.fh?-1:1, c.tf.fv?-1:1);
+  c2.translate(W/2+o.offX,H/2+(o.offY||0)); c2.rotate(c.tf.rot*Math.PI/180+(o.rot||0)); c2.scale(c.tf.fh?-1:1, c.tf.fv?-1:1);
   const r90=c.tf.rot%180!==0, bw=r90?H:W, bh=r90?W:H;
   const q=cropSrc(c,d), k=(c.tf.fit==='fill'?Math.max(bw/q.sw,bh/q.sh):Math.min(bw/q.sw,bh/q.sh))*c.tf.zoom*o.scale;
   if(c.crop){ c2.beginPath(); c2.rect(-q.sw*k/2,-q.sh*k/2,q.sw*k,q.sh*k); c2.clip(); }
@@ -833,8 +839,12 @@ function renderContent(c2,W,H,time,ui){
   } else {
     const c=cur.c, len=cur.len, local=clamp(time-cur.start,0,len-.001), idx=cur.idx;
     if(ui && cropClip()===c){ drawCropUI(c2,W,H,c); c2.restore(); return; }
-    const o={offX:0, scale:1, blur:0}; let over=null, overA=0;
+    const o={offX:0, offY:0, rot:0, scale:1, blur:0}; let over=null, overA=0, mask=null, glitchK=0;
+    applyMotion(c,o,local/len,W,H); applyEffectPre(c,o,time,W,H);
     if(idx>0 && c.tr!=='none' && local<TD){ const p=ease(local/TD);
+      if(c.tr==='spin'){ o.rot+=(1-p)*-Math.PI/2; o.scale*=.55+.45*p; over='#000'; overA=(1-p)*.6; }
+      else if(c.tr==='circle') mask={type:'circle',p}; else if(c.tr==='wipe') mask={type:'wipe',p};
+      else if(c.tr==='glitch'){ glitchK=1-p; o.offX+=(Math.random()-.5)*W*.08*(1-p); }
       if(c.tr==='fade'){over='#000';overA=1-p;} else if(c.tr==='white'){over='#fff';overA=1-p;}
       else if(c.tr==='zoom'){o.scale=1+.35*(1-p); over='#000'; overA=(1-p)*.5;} else if(c.tr==='slide'){o.offX=(1-p)*W;} else if(c.tr==='blur'){o.blur=(1-p)*W*.03;} }
     const nx=S.clips[idx+1];
@@ -844,6 +854,8 @@ function renderContent(c2,W,H,time,ui){
     if(!TR().v.on){ c2.fillStyle='#000'; c2.fillRect(0,0,W,H); }
     else { if(c.kind==='color') { c2.fillStyle='#000'; c2.fillRect(0,0,W,H); } else drawBg(c2,W,H,c);
       drawMedia(c2,W,H,c,local,o); }
+    applyEffectPost(c2,W,H,c,time); if(glitchK>0) glitchStrips(c2,W,H,glitchK,time);
+    if(mask) drawMask(c2,W,H,mask);
     if(c.fx.vig>0){ const rg=c2.createRadialGradient(W/2,H/2,Math.min(W,H)*.25,W/2,H/2,Math.hypot(W,H)/2); rg.addColorStop(0,'rgba(0,0,0,0)'); rg.addColorStop(1,`rgba(0,0,0,${(c.fx.vig/100*.8).toFixed(3)})`); c2.fillStyle=rg; c2.fillRect(0,0,W,H); }
     if(over&&overA>0){ c2.globalAlpha=clamp(overA,0,1); c2.fillStyle=over; c2.fillRect(0,0,W,H); c2.globalAlpha=1; }
     if(!frameOut()) drawFrame(c2,W,H);
@@ -852,6 +864,52 @@ function renderContent(c2,W,H,time,ui){
   c2.restore();
 }
 
+/* photo motion (Ken Burns) */
+function applyMotion(c,o,p,W,H){
+  const m=c.motion||'none'; if(m==='none'||c.kind==='color') return; p=clamp(p,0,1);
+  if(m==='zoomIn') o.scale*=1+.18*p; else if(m==='zoomOut') o.scale*=1.18-.18*p;
+  else if(m==='panL'){ o.scale*=1.15; o.offX+=W*.06*(1-2*p); } else if(m==='panR'){ o.scale*=1.15; o.offX-=W*.06*(1-2*p); }
+}
+/* clip effects */
+let noiseC=null;
+function noiseCanvas(){ if(noiseC) return noiseC; noiseC=document.createElement('canvas'); noiseC.width=noiseC.height=160; const g=noiseC.getContext('2d'), d=g.createImageData(160,160);
+  for(let i=0;i<d.data.length;i+=4){ const v=Math.random()*255; d.data[i]=d.data[i+1]=d.data[i+2]=v; d.data[i+3]=255; } g.putImageData(d,0,0); return noiseC; }
+const hash=n=>{ const x=Math.sin(n*127.1)*43758.5453; return x-Math.floor(x); };
+function applyEffectPre(c,o,time,W,H){
+  const e=c.eff||'none';
+  if(e==='shake'){ const k=Math.floor(time*24); o.offX+=(hash(k)-.5)*W*.03; o.offY+=(hash(k+7.3)-.5)*H*.02; o.rot+=(hash(k+3.1)-.5)*.02; o.scale*=1.04; }
+  else if(e==='pulse') o.scale*=1+.06*Math.pow(.5+.5*Math.sin(time*Math.PI*4),2);
+}
+function glitchStrips(c2,W,H,k,time){
+  const m=c2.getTransform(), n=Math.ceil(4+6*k), seed=Math.floor(time*20);
+  for(let i=0;i<n;i++){ const y=hash(seed+i*3.7)*H, h=H*(.01+.05*hash(seed+i*1.9)), dx=(hash(seed+i*5.3)-.5)*W*.12*k;
+    c2.drawImage(c2.canvas,m.e,m.f+y*m.d,W*m.a,h*m.d,dx,y,W,h); }
+  c2.save(); c2.globalCompositeOperation='screen'; c2.globalAlpha=.25*k; c2.fillStyle=hash(seed)>.5?'#ff0050':'#00e5ff';
+  c2.fillRect(0,hash(seed+9)*H,W,H*.04); c2.restore();
+}
+function applyEffectPost(c2,W,H,c,time){
+  const e=c.eff||'none'; if(e==='none'||e==='shake'||e==='pulse') return;
+  c2.save();
+  if(e==='glitch'){ const on=hash(Math.floor(time*6))>.45; if(on) glitchStrips(c2,W,H,.8,time); }
+  if(e==='vhs'||e==='grain'){ const pat=c2.createPattern(noiseCanvas(),'repeat'); c2.globalCompositeOperation='overlay'; c2.globalAlpha=e==='vhs'?.22:.18;
+    c2.beginPath(); c2.rect(0,0,W,H); c2.clip(); c2.translate((hash(Math.floor(time*24))*160)|0,(hash(Math.floor(time*24)+1)*160)|0); c2.fillStyle=pat; c2.fillRect(-160,-160,W+320,H+320); }
+  c2.restore(); c2.save();
+  if(e==='vhs'){ c2.globalAlpha=.16; c2.fillStyle='#000'; const step=Math.max(3,Math.round(H/240)); for(let y=0;y<H;y+=step) c2.fillRect(0,y,W,1);
+    c2.globalAlpha=1; if(hash(Math.floor(time*3))>.6) glitchStrips(c2,W,H,.35,time);
+    c2.globalCompositeOperation='screen'; c2.globalAlpha=.12; c2.fillStyle='#ff2d55'; c2.fillRect(W*.004,0,W,H); }
+  if(e==='flash'){ const k=(time*2)%1; if(k<.14){ c2.globalAlpha=(1-k/.14)*.55; c2.fillStyle='#fff'; c2.fillRect(0,0,W,H); } }
+  if(e==='leak'){ const x=W*(.5+.45*Math.sin(time*.7)), y=H*(.3+.25*Math.cos(time*.5)), r=Math.max(W,H)*.7, g=c2.createRadialGradient(x,y,0,x,y,r);
+    g.addColorStop(0,'rgba(255,170,60,.75)'); g.addColorStop(.45,'rgba(255,60,120,.28)'); g.addColorStop(1,'rgba(255,60,120,0)');
+    c2.globalCompositeOperation='screen'; c2.fillStyle=g; c2.fillRect(0,0,W,H); }
+  if(e==='mirror'){ const m=c2.getTransform(); c2.translate(W,0); c2.scale(-1,1); c2.drawImage(c2.canvas,m.e,m.f,W/2*m.a,H*m.d,0,0,W/2,H); }
+  c2.restore();
+}
+function drawMask(c2,W,H,mk){
+  c2.save(); c2.fillStyle='#000'; c2.beginPath();
+  if(mk.type==='circle'){ c2.rect(0,0,W,H); c2.arc(W/2,H/2,Math.max(1,mk.p*Math.hypot(W,H)/2),0,Math.PI*2); c2.fill('evenodd'); }
+  else { c2.fillRect(W*mk.p,0,W*(1-mk.p)+1,H); }
+  c2.restore();
+}
 function rrPath(c2,x,y,w,h,r){ r=Math.min(r,w/2,h/2); c2.moveTo(x+r,y); c2.arcTo(x+w,y,x+w,y+h,r); c2.arcTo(x+w,y+h,x,y+h,r); c2.arcTo(x,y+h,x,y,r); c2.arcTo(x,y,x+w,y,r); c2.closePath(); }
 function drawFrame(c2,W,H,pad){
   const f=FR(); if(f.type==='none') return;
@@ -1176,7 +1234,7 @@ function qtObj(){ if(!qt) return null; const arr=qt.type==='clip'?S.clips:qt.typ
 function qtTools(type,o){
   if(type==='clip'){ const v=o.kind==='video', col=o.kind==='color', i=S.clips.indexOf(o);
     return [['split','scissors','split'], !col&&['crop','crop','cropT',1], v&&['speed','speed','speed',1], v&&['vol','volume','volume',1], !v&&['dur','clock','duration',1], col&&['colors','swatch','colors',1],
-      !col&&['filter','filters','filters',1], !col&&['adjust','sliders','adjustShort',1], !col&&['rot','rotate','rotate'], !col&&['flip','flipH','flip'],
+      !col&&['filter','filters','filters',1], ['fx','sparkle','effects',1], !col&&['motion','expand','motionT',1], !col&&['adjust','sliders','adjustShort',1], !col&&['rot','rotate','rotate'], !col&&['flip','flipH','flip'],
       !col&&['fit','canvas',o.tf.fit==='fit'?'fill':'fit'], !col&&['zoom','zoomIn','zoom',1], i>0&&['tr','tr','transitionShort',1], ['dup','copy','duplicate'], ['del','trash','delete']].filter(Boolean); }
   if(type==='text') return [['font','text','font',1],['color','swatch','colorShort',1],['adjust','sliders','adjustShort',1],['anim','sparkle','anim',1],['dup','copy','duplicate'],['del','trash','delete']];
   return [['vol','volume','volume',1],['speed','speed','speed',1],['afx','filters','audioFx',1],['eq','sliders','eq',1],['fade','fade','fades',1],['split','scissors','split'],['here','pin','toHead'],['dup','copy','duplicate'],['del','trash','delete']];
@@ -1191,6 +1249,8 @@ function qtPanel(type,o,tool){
     case 'filter': return `<div class="strip">${Object.keys(PRESETS).map(p=>`<button class="pre${o.fx.p===p?' on':''}" data-act="preset" data-v="${p}" data-cid="${o.id}"><canvas width="120" height="120" data-pre="${p}"></canvas>${t(PRESET_LABEL[p])}</button>`).join('')}</div>`;
     case 'adjust': { const pr=adjP||'bri', P=ADJ.find(x=>x[0]===pr); return `<div class="chips">${ADJ.map(([k,l])=>`<button class="chip${k===pr?' on':''}" data-qp="${k}">${t(l)}</button>`).join('')}</div>`+rng('f.'+pr,o.fx[pr],P[2],P[3],1,pr==='vig'?'n':'sgn',t(P[1])); }
     case 'zoom': return rng('c.tf.zoom',o.tf.zoom,1,3,.01,'z',t('zoom'));
+    case 'fx': return chips('c.eff',EFFECTS.map(([k,l])=>[k,t(l)]),o.eff||'none')+`<p class="hint" style="margin:0">${t('efHint')}</p>`;
+    case 'motion': return chips('c.motion',MOTIONS.map(([k,l])=>[k,t(l)]),o.motion||'none');
     case 'crop': return `<div class="chips">${[['free',t('cropFree')],['proj',t('cropProj')],['1:1','1:1'],['9:16','9:16'],['16:9','16:9'],['4:5','4:5'],['4:3','4:3']].map(([v,l])=>`<button class="chip${(o.cropAR||'free')===v?' on':''}" data-act="cropAR" data-v="${v}"><span dir="ltr">${l}</span></button>`).join('')}</div><p class="hint" style="margin:0">${t('cropHint')}</p>${(()=>{ const d=srcDims(o), r=o.crop||{x:0,y:0,w:1,h:1}; return d&&d.w?`<div class="kv"><span>${t('cropSize')}</span><b>${d.w}×${d.h} → ${Math.round(r.w*d.w)}×${Math.round(r.h*d.h)}</b></div>`:''; })()}<div class="grid2"><button class="btn sm" data-act="cropReset">${t('reset')}</button><button class="btn sm primary" data-act="cropDone">${icon('check',16)} ${t('done')}</button></div>`;
     case 'tr': return chips('c.tr',TRS.map(([v,l])=>[v,t(l)]),o.tr);
   }
@@ -1215,9 +1275,11 @@ function qtPanel(type,o,tool){
   return '';
 }
 let mainTool=null, adjP='bri';
-const MAIN=[['canvas','ratio','canvas',1],['frame','frame','frame',1],['media','media','mediaS'],['music','music','addMusic'],['rec','mic','recShort'],['text','text','text'],['filter','filters','filters',1],['project','film','project',1],['export','export','export',1]];
+const STICKERS=['❤️','😂','😍','🔥','✨','⭐','🎉','👍','👏','😎','🥳','💯','🙏','😢','😮','🤍','💙','🌙','☀️','🌸','🌹','🎵','🎶','📍','✅','❌','⚡','💥','🎂','🎁','☕','🍕','🚗','✈️','📷','🎬','👑','💎','🕋','🇸🇦','➡️','⬅️','⬆️','⬇️','💬','❓','❗','💡'];
+const MAIN=[['canvas','ratio','canvas',1],['frame','frame','frame',1],['sticker','smile','stickers',1],['media','media','mediaS'],['music','music','addMusic'],['rec','mic','recShort'],['text','text','text'],['filter','filters','filters',1],['project','film','project',1],['export','export','export',1]];
 function mainPanel(k){
   if(k==='canvas') return pCanvas();
+  if(k==='sticker') return `<div class="stk">${STICKERS.map(e=>`<button class="stk-i" data-act="addSticker" data-v="${e}">${e}</button>`).join('')}</div>`;
   if(k==='frame'){ const f=FR(), hasImg=f.img&&SRC[f.img];
     let h=chips('s.frame.type',[['none',t('frNone')],['color',t('frColor')],['image',t('frImage')]],f.type);
     if(f.type!=='none') h+=chips('s.frame.pos',[['in',t('frIn')],['out',t('frOut')]],f.pos||'in')+`<p class="hint" style="margin:0">${t((f.pos||'in')==='out'?'frOutHint':'frInHint')}</p>`;
@@ -1607,6 +1669,8 @@ const ACTIONS={
   cropReset(){ const c=selClip(); if(!c) return; c.crop=null; c.cropAR='free'; applyCropRatio(c); result=null; commit(); dirty=true; },
   cropDone(){ const c=selClip(); applyCropRatio(c); if(qt) qt.tool=null; dirty=true; syncCropCanvas(); if(c&&c.crop){ const [w,h]=outSize(S.exp.q); toast(`${t('cropResized')} \u2066${w}×${h}\u2069`); } },
   pickFrame(){ $('#inFrame').click(); },
+  addSticker(b){ const tot=total(), st=T<tot-.2?T:0; const x=newText({text:b.dataset.v,start:st,end:Math.min(st+3,Math.max(tot,st+3)),y:.32+Math.random()*.2,x:.35+Math.random()*.3,size:14,style:'plain',anim:'pop',weight:400,sticker:true});
+    S.texts.push(x); sel={type:'text',id:x.id}; commit(); renderTimeline(); dirty=true; openTools('text',x.id); },
   delFrame(){ S.frame=Object.assign({},FRAME0); applyRatio(); result=null; commit(); dirty=true; toast(t('frDeleted')); },
   export(){ startExport(); }, cancelExport(){ endExport(true); },
   saveFile(){ saveResult(); }, newExport(){ result=null; renderPanel(); }
